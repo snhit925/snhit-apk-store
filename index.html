@@ -121,5 +121,25 @@ function toggleMenu() {
   }
 }
 </script>
+<script>
+const btn = document.getElementById("theme-toggle");
+
+btn.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  if(document.body.classList.contains("light-mode")){
+    btn.innerHTML = "🌙 Dark Mode";
+    localStorage.setItem("theme","light");
+  } else {
+    btn.innerHTML = "☀️ Light Mode";
+    localStorage.setItem("theme","dark");
+  }
+});
+
+if(localStorage.getItem("theme") === "light"){
+  document.body.classList.add("light-mode");
+  btn.innerHTML = "🌙 Dark Mode";
+}
+</script>
 </body>
 </html>
