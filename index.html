@@ -25,12 +25,22 @@ max-width:400px;
 border-radius:15px;
 }
 
-button{
+button{button{
 padding:10px 20px;
 border:none;
 border-radius:20px;
 cursor:pointer;
+
+background:#00ff88;
+color:black;
+font-weight:bold;
+transition:0.3s;
 }
+
+button:hover{
+transform:scale(1.05);
+box-shadow:0 0 20px #00ff88;
+}}
 .light-mode{
 background:#f5f5f5;
 color:black;
@@ -47,7 +57,24 @@ top:10px;
 right:10px;
 z-index:999;
 }</style>
+body{
+background: linear-gradient(-45deg, #0f0f0f, #00ff88, #001f3f, #ff0066);
+background-size: 400% 400%;
+animation: gamingBG 15s ease infinite;
+}
 
+@keyframes gamingBG {
+0% { background-position: 0% 50%; }
+50% { background-position: 100% 50%; }
+100% { background-position: 0% 50%; }
+}
+
+.card{
+background: rgba(0,0,0,0.7);
+backdrop-filter: blur(10px);
+border: 1px solid #00ff88;
+box-shadow: 0 0 15px #00ff88;
+}
 </head>
 <body>
 <button id="theme-toggle">🌙 Dark Mode</button>
