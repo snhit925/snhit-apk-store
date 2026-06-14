@@ -1,86 +1,95 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SNHIT APK STORE</title
+<title>SNHIT APK STORE</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body{
-background:#111;
-color:white;
-font-family:Arial,sans-serif;
-text-align:center;
-padding:20px;
-margin:0;
+  background:#111;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
+  padding:20px;
+  margin:0;
 }
 
 h1{
-color:#00ff88;
-text-shadow:0 0 15px #00ff88;
+  color:#00ff88;
+  text-shadow:0 0 15px #00ff88;
 }
 
+/* 📱 CARD FIX */
 .card{
-background:#222;
-padding:20px;
-margin:20px auto;
-max-width:400px;
-border-radius:15px;
-border:1px solid #00ff88;
-box-shadow:0 0 15px rgba(0,255,136,0.4);
+  background:#222;
+  padding:20px;
+  margin:20px auto;
+  max-width:400px;
+  border-radius:15px;
+  border:1px solid #00ff88;
+  box-shadow:0 0 15px rgba(0,255,136,0.4);
 }
 
+/* 🔘 BUTTON FIX */
 button{
-padding:10px 20px;
-border:none;
-border-radius:20px;
-cursor:pointer;
-background:#00ff88;
-color:black;
-font-weight:bold;
-transition:0.3s;
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:#00ff88;
+  color:black;
+  font-weight:bold;
+  transition:0.3s;
+  margin:5px;
 }
 
 button:hover{
-transform:scale(1.05);
-box-shadow:0 0 20px #00ff88;
+  transform:scale(1.05);
+  box-shadow:0 0 20px #00ff88;
 }
 
+/* 🔍 INPUT FIX */
 input{
-padding:12px;
-width:250px;
-border:none;
-border-radius:20px;
-outline:none;
+  padding:12px;
+  width:90%;
+  max-width:300px;
+  border:none;
+  border-radius:20px;
+  outline:none;
 }
 
+/* 🌙 LIGHT MODE */
 .light-mode{
-background:#f5f5f5;
-color:black;
+  background:#f5f5f5;
+  color:black;
 }
 
 .light-mode .card{
-background:white;
-color:black;
+  background:white;
+  color:black;
 }
 
-#theme-toggle{
-position:fixed;
-top:10px;
-right:10px;
-z-index:999;
-}
-
+/* ☰ MENU */
 #menu{
-display:none;
-background:#222;
-padding:10px;
-border-radius:10px;
-margin-top:10px;
+  display:none;
+  background:#222;
+  padding:10px;
+  border-radius:10px;
+  margin-top:10px;
 }
 
 #menu a{
-color:white;
-display:block;
-padding:8px;
-text-decoration:none;
+  color:white;
+  display:block;
+  padding:8px;
+  text-decoration:none;
+}
+
+/* 📱 MOBILE FIX */
+@media(max-width:600px){
+  h1{font-size:20px;}
+  button{width:90%;}
 }
 </style>
 </head>
@@ -92,28 +101,26 @@ text-decoration:none;
 <div style="font-size:30px;cursor:pointer;" onclick="toggleMenu()">☰</div>
 
 <div id="menu">
-<a href="#">Home</a>
-<a href="#">Apps</a>
-<a href="#">Contact</a>
+  <a href="#">Home</a>
+  <a href="#">Apps</a>
+  <a href="#">Contact</a>
 </div>
 
 <h1>🚀 SNHIT APK STORE</h1>
 
-<p style="font-size:18px;">
-Latest APKs • Fast Download • Secure Files
-</p>
+<p>Latest APKs • Fast Download • Secure Files</p>
 
 <input type="text" id="searchInput" placeholder="Search APK..." onkeyup="searchApps()">
-<div class="card">
-<h2>BGMI</h2>
-<p>Battle Royale Game</p>
-<p>Version: Latest</p>
 
-<a href="https://play.google.com/store/apps/details?id=com.pubg.imobile" target="_blank">
-<button>Open Game</button>
-</a>
+<div class="card">
+  <h2>BGMI</h2>
+  <p>Battle Royale Game</p>
+  <p>Version: Latest</p>
+
+  <a href="https://play.google.com/store/apps/details?id=com.pubg.imobile" target="_blank">
+    <button>Open Game</button>
+  </a>
 </div>
-<br>
 
 <h2>Categories</h2>
 
@@ -125,117 +132,75 @@ Latest APKs • Fast Download • Secure Files
 <br><br>
 
 <a href="https://t.me/Snhitbhukkal">
-<button>Telegram</button>
+  <button>Telegram</button>
 </a>
 
 <a href="https://wa.me/919253050115">
-<button>WhatsApp</button>
+  <button>WhatsApp</button>
 </a>
 
-<br><br>
-
 <h2>About Us</h2>
-
 <p>
 Welcome to SNHIT APK STORE.<br>
 Here you can download latest Android APK files.
 </p>
 
 <h2>Contact Us</h2>
-
 <p>Email: rohitbhukal802@gmail.com</p>
 
+<!-- 🎮 GAME SECTION -->
+<section style="padding:25px;">
+  <h2>🎮 Download Your Favorite Games</h2>
+
+  <a href="https://play.google.com/store/apps/details?id=com.dts.freefireth" target="_blank">
+    <button>🔥 Free Fire</button>
+  </a>
+
+  <a href="https://play.google.com/store/apps/details?id=com.king.candycrushsaga" target="_blank">
+    <button>🍬 Candy Crush</button>
+  </a>
+
+  <a href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe" target="_blank">
+    <button>⛏️ Minecraft</button>
+  </a>
+</section>
+
+<!-- 📜 SCRIPTS -->
 <script>
 function toggleMenu() {
   var menu = document.getElementById("menu");
-  if (menu.style.display === "block") {
-    menu.style.display = "none";
+  menu.style.display = (menu.style.display === "block") ? "none" : "block";
+}
+
+const btn = document.getElementById("theme-toggle");
+
+btn.addEventListener("click", () => {
+  document.body.classList.toggle("light-mode");
+
+  if(document.body.classList.contains("light-mode")){
+    btn.innerHTML = "☀️ Light Mode";
+    localStorage.setItem("theme","light");
   } else {
-    menu.style.display = "block";
+    btn.innerHTML = "🌙 Dark Mode";
+    localStorage.setItem("theme","dark");
+  }
+});
+
+if(localStorage.getItem("theme") === "light"){
+  document.body.classList.add("light-mode");
+  btn.innerHTML = "☀️ Light Mode";
+}
+
+function searchApps() {
+  let input = document.getElementById("searchInput").value.toLowerCase();
+  let cards = document.getElementsByClassName("card");
+
+  for(let i=0;i<cards.length;i++){
+    let text = cards[i].innerText.toLowerCase();
+    cards[i].style.display = text.includes(input) ? "block" : "none";
   }
 }
 </script>
 
-<script>
-const btn = document.getElementById("theme-toggle");
-
-btn.addEventListener("click", () => {
-document.body.classList.toggle("light-mode");
-
-if(document.body.classList.contains("light-mode")){
-btn.innerHTML = "🌙 Dark Mode";
-localStorage.setItem("theme","light");
-}else{
-btn.innerHTML = "☀️ Light Mode";
-localStorage.setItem("theme","dark");
-}
-});
-
-if(localStorage.getItem("theme") === "light"){
-document.body.classList.add("light-mode");
-btn.innerHTML = "🌙 Dark Mode";
-}
-</script>
-<script>
-function searchApps() {
-
-let input =
-document.getElementById("searchInput")
-.value.toLowerCase();
-
-let cards =
-document.getElementsByClassName("card");
-
-for(let i=0;i<cards.length;i++){
-
-let text =
-cards[i].innerText.toLowerCase();
-
-if(text.includes(input)){
-cards[i].style.display = "block";
-}else{
-cards[i].style.display = "none";
-}
-
-}
-
-}
-</script>
-  <!-- 🎮 GAME DOWNLOAD SECTION START -->
-<section style="padding:25px; text-align:center; background:#111; color:white;">
-
-  <h2>🎮 Download Your Favorite Games</h2>
-
-  <div style="margin-top:20px;">
-
-    <a href="https://play.google.com/store/apps/details?id=com.dts.freefireth" target="_blank">
-      <button style="padding:12px 20px; margin:10px; background:#ff3d00; color:white; border:none; border-radius:10px;">
-        🔥 Free Fire
-      </button>
-    </a>
-
-    <a href="https://play.google.com/store/apps/details?id=com.king.candycrushsaga" target="_blank">
-      <button style="padding:12px 20px; margin:10px; background:#ff9800; color:white; border:none; border-radius:10px;">
-        🍬 Candy Crush
-      </button>
-    </a>
-
-    <a href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe" target="_blank">
-      <button style="padding:12px 20px; margin:10px; background:#4caf50; color:white; border:none; border-radius:10px;">
-        ⛏️ Minecraft
-      </button>
-    </a>
-
-  </div>
-
-</section>
-<!-- 🎮 GAME DOWNLOAD SECTION END -->
-<a href="https://instagram.com/snhit_bhukkall" target="_blank" style="position:fixed; bottom:20px; right:20px;">
-  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" 
-       alt="Instagram" 
-       width="55" 
-       height="55"
-       style="border-radius:50%; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-</a>
-</body>
-</html>
+<!-- 📸 FLOATING INSTAGRAM -->
+<a href="https://instagram.com/YOUR_USERNAME" target="_blank"
