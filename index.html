@@ -1,215 +1,255 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>SNHIT APK STORE</title>
-
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNHIT Chat Hub</title>
 
 <style>
-body{
-  background:#111;
-  color:white;
-  font-family:Arial,sans-serif;
-  text-align:center;
-  padding:20px;
+*{
   margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
 
-h1{
-  color:#00ff88;
-  text-shadow:0 0 15px #00ff88;
+body{
+  background:#0f0f0f;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  padding:15px;
 }
 
-/* 📱 CARD FIX */
-.card{
-  background:#222;
+/* LOGIN */
+.box{
+  width:100%;
+  max-width:500px;
+  background:#1c1c1c;
   padding:20px;
-  margin:20px auto;
-  max-width:400px;
-  border-radius:15px;
+  border-radius:20px;
   border:1px solid #00ff88;
-  box-shadow:0 0 15px rgba(0,255,136,0.4);
 }
 
-/* 🔘 BUTTON FIX */
-button{
-  padding:10px 20px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  background:#00ff88;
-  color:black;
-  font-weight:bold;
-  transition:0.3s;
-  margin:5px;
+h1,h2{
+  text-align:center;
+  color:#00ff88;
+  margin-bottom:15px;
 }
 
-button:hover{
-  transform:scale(1.05);
-  box-shadow:0 0 20px #00ff88;
-}
-
-/* 🔍 INPUT FIX */
 input{
+  width:100%;
   padding:12px;
-  width:90%;
-  max-width:300px;
+  margin:8px 0;
   border:none;
-  border-radius:20px;
+  border-radius:10px;
   outline:none;
 }
 
-/* 🌙 LIGHT MODE */
-.light-mode{
-  background:#f5f5f5;
-  color:black;
+button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border:none;
+  border-radius:10px;
+  background:#00ff88;
+  font-weight:bold;
+  cursor:pointer;
 }
 
-.light-mode .card{
-  background:white;
-  color:black;
-}
+/* CHAT */
+#app{ display:none; }
 
-/* ☰ MENU */
-#menu{
-  display:none;
-  background:#222;
+#messages{
+  height:350px;
+  overflow-y:auto;
+  background:#111;
   padding:10px;
   border-radius:10px;
-  margin-top:10px;
+  margin-bottom:10px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
 }
 
-#menu a{
-  color:white;
-  display:block;
-  padding:8px;
-  text-decoration:none;
+.msg{
+  max-width:70%;
+  padding:10px;
+  border-radius:12px;
+  font-size:14px;
+  word-break:break-word;
 }
 
-/* 📱 MOBILE FIX */
-@media(max-width:600px){
-  h1{font-size:20px;}
-  button{width:90%;}
+.left{
+  background:#2a2a2a;
+  align-self:flex-start;
+}
+
+.right{
+  background:#00ff88;
+  color:#000;
+  align-self:flex-end;
+}
+
+.name{
+  font-size:11px;
+  opacity:0.7;
+  margin-bottom:3px;
 }
 </style>
 </head>
 
 <body>
 
-<button id="theme-toggle">🌙 Dark Mode</button>
+<!-- LOGIN -->
+<div id="loginPage" class="box">
+  <h2>Login / Signup</h2>
 
-<div style="font-size:30px;cursor:pointer;" onclick="toggleMenu()">☰</div>
+  <input id="email" placeholder="Email">
+  <input id="password" placeholder="Password">
+  <input id="username" placeholder="Username">
 
-<div id="menu">
-  <a href="#">Home</a>
-  <a href="#">Apps</a>
-  <a href="#">Contact</a>
+  <button onclick="signup()">Signup</button>
+  <button onclick="login()">Login</button>
 </div>
 
-<h1>🚀 SNHIT APK STORE</h1>
+<!-- CHAT -->
+<div id="app" class="box">
+  <h2>💬 Chat Hub</h2>
 
-<p>Latest APKs • Fast Download • Secure Files</p>
+  <div id="messages"></div>
 
-<input type="text" id="searchInput" placeholder="Search APK..." onkeyup="searchApps()">
+  <input id="messageInput" placeholder="Type message...">
+  <button onclick="sendMessage()">Send</button>
 
-<div class="card">
-  <h2>BGMI</h2>
-  <p>Battle Royale Game</p>
-  <p>Version: Latest</p>
-
-  <a href="https://play.google.com/store/apps/details?id=com.pubg.imobile" target="_blank">
-    <button>Open Game</button>
-  </a>
+  <button onclick="logout()" style="background:red;margin-top:10px;">Logout</button>
 </div>
 
-<h2>Categories</h2>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-<button>Games</button>
-<button>Tools</button>
-<button>Editing</button>
-<button>Entertainment</button>
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-<br><br>
+/* FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyAGwaIUPulsO721G-3yIDnLzYaKgQpYybY",
+  authDomain: "snhit-chat-hub.firebaseapp.com",
+  projectId: "snhit-chat-hub",
+  storageBucket: "snhit-chat-hub.firebasestorage.app",
+  messagingSenderId: "241439945461",
+  appId: "1:241439945461:web:95258c72967e4756dd8bbc"
+};
 
-<a href="https://t.me/Snhitbhukkal">
-  <button>Telegram</button>
-</a>
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-<a href="https://wa.me/919253050115">
-  <button>WhatsApp</button>
-</a>
+/* SIGNUP */
+window.signup = async function(){
+  const email = email.value;
+  const password = password.value;
+  const username = document.getElementById("username").value;
 
-<h2>About Us</h2>
-<p>
-Welcome to SNHIT APK STORE.<br>
-Here you can download latest Android APK files.
-</p>
+  try{
+    await createUserWithEmailAndPassword(auth,email,password);
+    localStorage.setItem("username",username);
+    alert("Signup Success");
+  }catch(err){
+    alert(err.message);
+  }
+};
 
-<h2>Contact Us</h2>
-<p>Email: rohitbhukal802@gmail.com</p>
+/* LOGIN */
+window.login = async function(){
+  try{
+    await signInWithEmailAndPassword(auth,email.value,password.value);
+    alert("Login Success");
+  }catch(err){
+    alert(err.message);
+  }
+};
 
-<!-- 🎮 GAME SECTION -->
-<section style="padding:25px;">
-  <h2>🎮 Download Your Favorite Games</h2>
+/* LOGOUT */
+window.logout = function(){
+  signOut(auth);
+};
 
-  <a href="https://play.google.com/store/apps/details?id=com.dts.freefireth" target="_blank">
-    <button>🔥 Free Fire</button>
-  </a>
-
-  <a href="https://play.google.com/store/apps/details?id=com.king.candycrushsaga" target="_blank">
-    <button>🍬 Candy Crush</button>
-  </a>
-
-  <a href="https://play.google.com/store/apps/details?id=com.mojang.minecraftpe" target="_blank">
-    <button>⛏️ Minecraft</button>
-  </a>
-</section>
-
-<!-- 📜 SCRIPTS -->
-<script>
-function toggleMenu() {
-  var menu = document.getElementById("menu");
-  menu.style.display = (menu.style.display === "block") ? "none" : "block";
-}
-
-const btn = document.getElementById("theme-toggle");
-
-btn.addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
-
-  if(document.body.classList.contains("light-mode")){
-    btn.innerHTML = "☀️ Light Mode";
-    localStorage.setItem("theme","light");
-  } else {
-    btn.innerHTML = "🌙 Dark Mode";
-    localStorage.setItem("theme","dark");
+/* AUTO SWITCH */
+onAuthStateChanged(auth,(user)=>{
+  if(user){
+    loginPage.style.display="none";
+    appUI.style.display="block";
+  }else{
+    loginPage.style.display="block";
+    appUI.style.display="none";
   }
 });
 
-if(localStorage.getItem("theme") === "light"){
-  document.body.classList.add("light-mode");
-  btn.innerHTML = "☀️ Light Mode";
-}
+const loginPage = document.getElementById("loginPage");
+const appUI = document.getElementById("app");
 
-function searchApps() {
-  let input = document.getElementById("searchInput").value.toLowerCase();
-  let cards = document.getElementsByClassName("card");
+/* SEND MESSAGE */
+window.sendMessage = async function(){
+  const input = document.getElementById("messageInput");
 
-  for(let i=0;i<cards.length;i++){
-    let text = cards[i].innerText.toLowerCase();
-    cards[i].style.display = text.includes(input) ? "block" : "none";
-  }
-}
+  if(!input.value.trim()) return;
+
+  const name = localStorage.getItem("username") || "Anonymous";
+
+  await addDoc(collection(db,"messages"),{
+    text: input.value,
+    name: name,
+    uid: auth.currentUser.uid,
+    createdAt: serverTimestamp()
+  });
+
+  input.value="";
+};
+
+/* LOAD MESSAGES */
+const q = query(collection(db,"messages"),orderBy("createdAt"));
+
+onSnapshot(q,(snapshot)=>{
+  const box = document.getElementById("messages");
+  box.innerHTML="";
+
+  snapshot.forEach(doc=>{
+    const data = doc.data();
+
+    const div = document.createElement("div");
+
+    const isMe = auth.currentUser && data.uid === auth.currentUser.uid;
+
+    div.className = "msg " + (isMe ? "right" : "left");
+
+    div.innerHTML = `
+      <div class="name">${data.name || "Anonymous"}</div>
+      <div>${data.text}</div>
+    `;
+
+    box.appendChild(div);
+  });
+
+  box.scrollTop = box.scrollHeight;
+});
 </script>
 
-<!-- 📸 FLOATING INSTAGRAM -->
-<a href="https://instagram.com/snhit_bhukkall" target="_blank"
-  style="position:fixed; bottom:20px; right:20px;">
-  <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" 
-       alt="Instagram" 
-       width="55" 
-       height="55"
-       style="border-radius:50%; box-shadow:0 0 10px rgba(0,0,0,0.3);">
-</a>
 </body>
 </html>
