@@ -105,8 +105,37 @@ transform:scale(1.04);
 
 function playGame(){
   document.body.innerHTML = `
-    <h1>🎲 SNHIT Ludo Board</h1>
-    <p>Board loading...</p>
+    <div style="text-align:center;font-family:Arial;">
+
+      <h1 style="color:#00ff88;">🎲 SNHIT Ludo Board</h1>
+
+      <div style="
+        width:320px;
+        height:320px;
+        margin:20px auto;
+        display:grid;
+        grid-template-columns:repeat(15,1fr);
+        grid-template-rows:repeat(15,1fr);
+        border:3px solid #00ff88;
+      ">
+
+        <!-- 🔴 Red Home -->
+        <div style="grid-column:1/7;grid-row:1/7;background:red;"></div>
+
+        <!-- 🟢 Green Home -->
+        <div style="grid-column:10/16;grid-row:1/7;background:green;"></div>
+
+        <!-- 🟡 Yellow Home -->
+        <div style="grid-column:1/7;grid-row:10/16;background:gold;"></div>
+
+        <!-- 🔵 Blue Home -->
+        <div style="grid-column:10/16;grid-row:10/16;background:blue;"></div>
+
+      </div>
+
+      <p>Homes added ✔</p>
+
+    </div>
   `;
 }
 function createRoom(){
