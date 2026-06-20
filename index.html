@@ -102,12 +102,11 @@ transform:scale(1.04);
 </div>
 
 <script>
-
 function playGame(){
   document.body.innerHTML = `
   <div style="text-align:center;font-family:Arial;">
-  
-    <h2 style="color:#00ff88;">🎲 SNHIT Ludo</h2>
+
+    <h2 style="color:#00ff88;">🎲 SNHIT Ludo Board</h2>
 
     <div style="
       width:360px;
@@ -131,12 +130,18 @@ function playGame(){
       <!-- 🔵 Blue Home -->
       <div style="grid-column:10/16;grid-row:10/16;background:#3498db;"></div>
 
-      <!-- ⭐ Center (Finish area) -->
+      <!-- ⭐ Center -->
       <div style="grid-column:7/10;grid-row:7/10;background:white;"></div>
+
+      <!-- 🛣️ Vertical Path -->
+      <div style="grid-column:7/10;grid-row:1/16;background:#ddd;opacity:0.8;"></div>
+
+      <!-- 🛣️ Horizontal Path -->
+      <div style="grid-column:1/16;grid-row:7/10;background:#ddd;opacity:0.8;"></div>
 
     </div>
 
-    <p>Basic Ludo structure ✔</p>
+    <p>Paths added ✔</p>
 
   </div>
   `;
