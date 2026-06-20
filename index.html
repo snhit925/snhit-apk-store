@@ -3,252 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SNHIT Chat Hub</title>
+
+<title>SNHIT Ludo</title>
 
 <style>
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial,sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
 body{
-  background:#0f0f0f;
-  color:#fff;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  min-height:100vh;
-  padding:15px;
+background:linear-gradient(135deg,#111,#1b1b1b);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
 }
 
-/* LOGIN */
-.box{
-  width:100%;
-  max-width:500px;
-  background:#1c1c1c;
-  padding:20px;
-  border-radius:20px;
-  border:1px solid #00ff88;
+.container{
+width:90%;
+max-width:420px;
+background:#222;
+padding:30px;
+border-radius:20px;
+text-align:center;
+border:2px solid #00ff88;
+box-shadow:0 0 20px rgba(0,255,136,.4);
 }
 
-h1,h2{
-  text-align:center;
-  color:#00ff88;
-  margin-bottom:15px;
+h1{
+font-size:38px;
+color:#00ff88;
+margin-bottom:10px;
 }
 
-input{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border:none;
-  border-radius:10px;
-  outline:none;
+p{
+opacity:.8;
+margin-bottom:25px;
 }
 
 button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  border:none;
-  border-radius:10px;
-  background:#00ff88;
-  font-weight:bold;
-  cursor:pointer;
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
 }
 
-/* CHAT */
-#app{ display:none; }
-
-#messages{
-  height:350px;
-  overflow-y:auto;
-  background:#111;
-  padding:10px;
-  border-radius:10px;
-  margin-bottom:10px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
+.play{
+background:#00ff88;
 }
 
-.msg{
-  max-width:70%;
-  padding:10px;
-  border-radius:12px;
-  font-size:14px;
-  word-break:break-word;
+.room{
+background:#2196f3;
+color:white;
 }
 
-.left{
-  background:#2a2a2a;
-  align-self:flex-start;
+.join{
+background:#ff9800;
+color:white;
 }
 
-.right{
-  background:#00ff88;
-  color:#000;
-  align-self:flex-end;
+.setting{
+background:#555;
+color:white;
 }
 
-.name{
-  font-size:11px;
-  opacity:0.7;
-  margin-bottom:3px;
+button:hover{
+transform:scale(1.04);
 }
 </style>
+
 </head>
 
 <body>
 
-<!-- LOGIN -->
-<div id="loginPage" class="box">
-  <h2>Login / Signup</h2>
+<div class="container">
 
-  <input id="email" placeholder="Email">
-  <input id="password" placeholder="Password">
-  <input id="username" placeholder="Username">
+<h1>🎲 SNHIT Ludo</h1>
 
-  <button onclick="signup()">Signup</button>
-  <button onclick="login()">Login</button>
+<p>No Ads • Online Multiplayer • Made By SNHIT</p>
+
+<button class="play" onclick="playGame()">▶ Play</button>
+
+<button class="room" onclick="createRoom()">👥 Create Room</button>
+
+<button class="join" onclick="joinRoom()">🔑 Join Room</button>
+
+<button class="setting" onclick="settings()">⚙ Settings</button>
+
 </div>
 
-<!-- CHAT -->
-<div id="app" class="box">
-  <h2>💬 Chat Hub</h2>
+<script>
 
-  <div id="messages"></div>
+function playGame(){
+alert("Board Coming Soon 🚀");
+}
 
-  <input id="messageInput" placeholder="Type message...">
-  <button onclick="sendMessage()">Send</button>
+function createRoom(){
+alert("Create Room Coming Soon 🚀");
+}
 
-  <button onclick="logout()" style="background:red;margin-top:10px;">Logout</button>
-</div>
+function joinRoom(){
+alert("Join Room Coming Soon 🚀");
+}
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+function settings(){
+alert("Settings Coming Soon 🚀");
+}
 
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-/* FIREBASE */
-const firebaseConfig = {
-  apiKey: "AIzaSyAGwaIUPulsO721G-3yIDnLzYaKgQpYybY",
-  authDomain: "snhit-chat-hub.firebaseapp.com",
-  projectId: "snhit-chat-hub",
-  storageBucket: "snhit-chat-hub.firebasestorage.app",
-  messagingSenderId: "241439945461",
-  appId: "1:241439945461:web:95258c72967e4756dd8bbc"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-/* SIGNUP */
-window.signup = async function(){
-  const email = email.value;
-  const password = password.value;
-  const username = document.getElementById("username").value;
-
-  try{
-    await createUserWithEmailAndPassword(auth,email,password);
-    localStorage.setItem("username",username);
-    alert("Signup Success");
-  }catch(err){
-    alert(err.message);
-  }
-};
-
-/* LOGIN */
-window.login = async function(){
-  try{
-    await signInWithEmailAndPassword(auth,email.value,password.value);
-    alert("Login Success");
-  }catch(err){
-    alert(err.message);
-  }
-};
-
-/* LOGOUT */
-window.logout = function(){
-  signOut(auth);
-};
-
-/* AUTO SWITCH */
-onAuthStateChanged(auth,(user)=>{
-  if(user){
-    loginPage.style.display="none";
-    appUI.style.display="block";
-  }else{
-    loginPage.style.display="block";
-    appUI.style.display="none";
-  }
-});
-
-const loginPage = document.getElementById("loginPage");
-const appUI = document.getElementById("app");
-
-/* SEND MESSAGE */
-window.sendMessage = async function(){
-  const input = document.getElementById("messageInput");
-
-  if(!input.value.trim()) return;
-
-  const name = localStorage.getItem("username") || "Anonymous";
-
-  await addDoc(collection(db,"messages"),{
-    text: input.value,
-    name: name,
-    uid: auth.currentUser.uid,
-    createdAt: serverTimestamp()
-  });
-
-  input.value="";
-};
-
-/* LOAD MESSAGES */
-const q = query(collection(db,"messages"),orderBy("createdAt"));
-
-onSnapshot(q,(snapshot)=>{
-  const box = document.getElementById("messages");
-  box.innerHTML="";
-
-  snapshot.forEach(doc=>{
-    const data = doc.data();
-
-    const div = document.createElement("div");
-
-    const isMe = auth.currentUser && data.uid === auth.currentUser.uid;
-
-    div.className = "msg " + (isMe ? "right" : "left");
-
-    div.innerHTML = `
-      <div class="name">${data.name || "Anonymous"}</div>
-      <div>${data.text}</div>
-    `;
-
-    box.appendChild(div);
-  });
-
-  box.scrollTop = box.scrollHeight;
-});
 </script>
 
 </body>
