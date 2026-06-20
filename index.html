@@ -113,35 +113,40 @@ function playGame(){
       height:360px;
       margin:20px auto;
       display:grid;
-      grid-template-columns:repeat(15, 1fr);
-      grid-template-rows:repeat(15, 1fr);
+      grid-template-columns:repeat(15,1fr);
+      grid-template-rows:repeat(15,1fr);
       border:4px solid #00ff88;
     ">
 
-      <!-- 🔴 Red Home -->
+      <!-- Homes -->
       <div style="grid-column:1/7;grid-row:1/7;background:#ff4d4d;"></div>
-
-      <!-- 🟢 Green Home -->
       <div style="grid-column:10/16;grid-row:1/7;background:#2ecc71;"></div>
-
-      <!-- 🟡 Yellow Home -->
       <div style="grid-column:1/7;grid-row:10/16;background:#f1c40f;"></div>
-
-      <!-- 🔵 Blue Home -->
       <div style="grid-column:10/16;grid-row:10/16;background:#3498db;"></div>
 
-      <!-- ⭐ Center -->
+      <!-- Center -->
       <div style="grid-column:7/10;grid-row:7/10;background:white;"></div>
 
-      <!-- 🛣️ Vertical Path -->
-      <div style="grid-column:7/10;grid-row:1/16;background:#ddd;opacity:0.8;"></div>
+      <!-- Vertical Path -->
+      <div style="grid-column:7/10;grid-row:1/16;background:#ddd;"></div>
 
-      <!-- 🛣️ Horizontal Path -->
-      <div style="grid-column:1/16;grid-row:7/10;background:#ddd;opacity:0.8;"></div>
+      <!-- Horizontal Path -->
+      <div style="grid-column:1/16;grid-row:7/10;background:#ddd;"></div>
+
+      <!-- Safe tiles highlight -->
+      <div style="grid-column:8;grid-row:2;background:#bbb;"></div>
+      <div style="grid-column:8;grid-row:3;background:#bbb;"></div>
+      <div style="grid-column:8;grid-row:4;background:#bbb;"></div>
+      <div style="grid-column:8;grid-row:5;background:#bbb;"></div>
+
+      <div style="grid-column:2;grid-row:8;background:#bbb;"></div>
+      <div style="grid-column:3;grid-row:8;background:#bbb;"></div>
+      <div style="grid-column:4;grid-row:8;background:#bbb;"></div>
+      <div style="grid-column:5;grid-row:8;background:#bbb;"></div>
 
     </div>
 
-    <p>Paths added ✔</p>
+    <p>Tiles structure ✔</p>
 
   </div>
   `;
