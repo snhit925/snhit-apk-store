@@ -3,13 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>SNHIT Ludo</title>
 
 <style>
-body{
+*{
 margin:0;
-font-family:Arial;
-background:#0f0f0f;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#111,#1b1b1b);
 display:flex;
 justify-content:center;
 align-items:center;
@@ -18,30 +24,47 @@ color:white;
 }
 
 .container{
-text-align:center;
-background:#222;
-padding:25px;
-border-radius:15px;
-border:2px solid #00ff88;
 width:90%;
 max-width:420px;
+background:#222;
+padding:30px;
+border-radius:20px;
+text-align:center;
+border:2px solid #00ff88;
+box-shadow:0 0 20px rgba(0,255,136,.4);
+}
+
+h1{
+font-size:38px;
+color:#00ff88;
+margin-bottom:10px;
+}
+
+p{
+opacity:.8;
+margin-bottom:25px;
 }
 
 button{
 width:100%;
-padding:12px;
-margin-top:10px;
+padding:15px;
+margin:10px 0;
 border:none;
-border-radius:10px;
-cursor:pointer;
-font-size:16px;
+border-radius:12px;
+font-size:18px;
 font-weight:bold;
+cursor:pointer;
+transition:.3s;
 }
 
 .play{background:#00ff88;}
 .room{background:#2196f3;color:white;}
 .join{background:#ff9800;color:white;}
 .setting{background:#555;color:white;}
+
+button:hover{
+transform:scale(1.04);
+}
 </style>
 
 </head>
@@ -51,76 +74,101 @@ font-weight:bold;
 <div class="container">
 
 <h1>🎲 SNHIT Ludo</h1>
-<p>No Ads • Online Multiplayer</p>
 
-<button class="play" onclick="playGame()">PLAY</button>
-<button class="room">Create Room</button>
-<button class="join">Join Room</button>
-<button class="setting">Settings</button>
+<p>No Ads • Online Multiplayer • Made By SNHIT</p>
+
+<button class="play" onclick="playGame()">▶️ Play</button>
+
+<button class="room" onclick="createRoom()">👥 Create Room</button>
+
+<button class="join" onclick="joinRoom()">🔑 Join Room</button>
+
+<button class="setting" onclick="settings()">⚙ Settings</button>
 
 </div>
 
 <script>
 
 function playGame(){
+  document.body.innerHTML = `
+  <div style="text-align:center;font-family:Arial;background:#111;color:white;min-height:100vh;">
 
-document.body.innerHTML = `
-<div style="text-align:center;background:#111;color:white;height:100vh;padding-top:20px;">
+    <button onclick="location.reload()" style="
+      position:absolute;
+      top:10px;
+      left:10px;
+      padding:10px;
+      background:red;
+      color:white;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+    ">⬅ Back</button>
 
-<button onclick="location.reload()" style="
-position:absolute;left:10px;top:10px;
-padding:8px;background:red;color:white;border:none;border-radius:6px;
-">Back</button>
+    <h2 style="color:#00ff88;padding:10px;">🎲 SNHIT Ludo Board</h2>
 
-<h2 style="color:#00ff88;">SNHIT Ludo Board</h2>
+    <div style="
+      width:360px;
+      height:360px;
+      margin:20px auto;
+      display:grid;
+      grid-template-columns:repeat(15,1fr);
+      grid-template-rows:repeat(15,1fr);
+      border:4px solid #00ff88;
+      background:#222;
+      position:relative;
+    ">
 
-<div style="
-margin:20px auto;
-width:300px;
-height:300px;
-display:grid;
-grid-template-columns:repeat(15,1fr);
-grid-template-rows:repeat(15,1fr);
-background:#222;
-border:3px solid #00ff88;
-">
+      <!-- 🔴 RED HOME -->
+      <div style="grid-column:1/7;grid-row:1/7;background:#ff4d4d;"></div>
 
-<!-- Homes -->
-<div style="grid-column:1/7;grid-row:1/7;background:red;"></div>
-<div style="grid-column:10/16;grid-row:1/7;background:green;"></div>
-<div style="grid-column:1/7;grid-row:10/16;background:yellow;"></div>
-<div style="grid-column:10/16;grid-row:10/16;background:blue;"></div>
+      <!-- 🟢 GREEN HOME -->
+      <div style="grid-column:10/16;grid-row:1/7;background:#2ecc71;"></div>
 
-<!-- Center -->
-<div style="grid-column:7/10;grid-row:7/10;background:white;"></div>
+      <!-- 🟡 YELLOW HOME -->
+      <div style="grid-column:1/7;grid-row:10/16;background:#f1c40f;"></div>
 
-<!-- Safe simple roads -->
-<div style="grid-column:8;grid-row:1/16;background:#555;"></div>
-<div style="grid-column:1/16;grid-row:8;background:#555;"></div>
+      <!-- 🔵 BLUE HOME -->
+      <div style="grid-column:10/16;grid-row:10/16;background:#3498db;"></div>
 
-</div>
+      <!-- ⭐ CENTER -->
+      <div style="grid-column:7/10;grid-row:7/10;background:white;"></div>
 
-<p>Board Loaded ✔</p>
-<div id="diceBox" style="margin-top:20px;">
-  <button onclick="rollDice()" style="
-    padding:12px 20px;
-    font-size:18px;
-    background:#00ff88;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
-  ">
-    🎲 Roll Dice
-  </button>
+      <!-- 🛣️ VERTICAL ROAD (FIXED THICKNESS) -->
+      <div style="grid-column:8;grid-row:1/16;background:#555;"></div>
 
-  <h2 id="diceResult" style="margin-top:10px;">Roll: -</h2>
-</div>
+      <!-- 🛣️ HORIZONTAL ROAD (FIXED THICKNESS) -->
+      <div style="grid-column:1/16;grid-row:8;background:#555;"></div>
 
-<p>Board Loaded ✔</p>
-</div>
-`;
+      <!-- 🟩 SAFE TILES -->
+      <div style="grid-column:8;grid-row:2;background:#888;"></div>
+      <div style="grid-column:8;grid-row:3;background:#888;"></div>
+      <div style="grid-column:8;grid-row:4;background:#888;"></div>
+      <div style="grid-column:8;grid-row:5;background:#888;"></div>
 
+      <div style="grid-column:2;grid-row:8;background:#888;"></div>
+      <div style="grid-column:3;grid-row:8;background:#888;"></div>
+      <div style="grid-column:4;grid-row:8;background:#888;"></div>
+      <div style="grid-column:5;grid-row:8;background:#888;"></div>
+
+    </div>
+
+    <p>✔ Clean Ludo Board Ready</p>
+
+  </div>
+  `;
+}
+
+function createRoom(){
+alert("Create Room Coming Soon 🚀");
+}
+
+function joinRoom(){
+alert("Join Room Coming Soon 🚀");
+}
+
+function settings(){
+alert("Settings Coming Soon 🚀");
 }
 
 </script>
