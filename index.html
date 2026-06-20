@@ -57,24 +57,10 @@ cursor:pointer;
 transition:.3s;
 }
 
-.play{
-background:#00ff88;
-}
-
-.room{
-background:#2196f3;
-color:white;
-}
-
-.join{
-background:#ff9800;
-color:white;
-}
-
-.setting{
-background:#555;
-color:white;
-}
+.play{background:#00ff88;}
+.room{background:#2196f3;color:white;}
+.join{background:#ff9800;color:white;}
+.setting{background:#555;color:white;}
 
 button:hover{
 transform:scale(1.04);
@@ -91,7 +77,7 @@ transform:scale(1.04);
 
 <p>No Ads • Online Multiplayer • Made By SNHIT</p>
 
-<button class="play" onclick="playGame()">▶ Play</button>
+<button class="play" onclick="playGame()">▶️ Play</button>
 
 <button class="room" onclick="createRoom()">👥 Create Room</button>
 
@@ -102,13 +88,26 @@ transform:scale(1.04);
 </div>
 
 <script>
+
 function playGame(){
   document.body.innerHTML = `
   <div style="text-align:center;font-family:Arial;background:#111;color:white;min-height:100vh;">
 
+    <button onclick="location.reload()" style="
+      position:absolute;
+      top:10px;
+      left:10px;
+      padding:10px;
+      background:red;
+      color:white;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+    ">⬅ Back</button>
+
     <h2 style="color:#00ff88;padding:10px;">🎲 SNHIT Ludo Board</h2>
 
-    <div id="board" style="
+    <div style="
       width:360px;
       height:360px;
       margin:20px auto;
@@ -116,24 +115,32 @@ function playGame(){
       grid-template-columns:repeat(15,1fr);
       grid-template-rows:repeat(15,1fr);
       border:4px solid #00ff88;
-      background:#222;
       position:relative;
+      background:#222;
     ">
 
-      <!-- 🔴 Homes -->
+      <!-- 🔴 RED HOME -->
       <div style="grid-column:1/7;grid-row:1/7;background:#ff4d4d;"></div>
+
+      <!-- 🟢 GREEN HOME -->
       <div style="grid-column:10/16;grid-row:1/7;background:#2ecc71;"></div>
+
+      <!-- 🟡 YELLOW HOME -->
       <div style="grid-column:1/7;grid-row:10/16;background:#f1c40f;"></div>
+
+      <!-- 🔵 BLUE HOME -->
       <div style="grid-column:10/16;grid-row:10/16;background:#3498db;"></div>
 
-      <!-- ⭐ Center -->
+      <!-- ⭐ CENTER -->
       <div style="grid-column:7/10;grid-row:7/10;background:white;"></div>
 
-      <!-- 🛣️ Main Roads -->
+      <!-- 🛣️ VERTICAL ROAD -->
       <div style="grid-column:7/10;grid-row:1/16;background:#444;opacity:0.9;"></div>
+
+      <!-- 🛣️ HORIZONTAL ROAD -->
       <div style="grid-column:1/16;grid-row:7/10;background:#444;opacity:0.9;"></div>
 
-      <!-- 🟢 Safe feel tiles -->
+      <!-- 🟢 SAFE TILES -->
       <div style="grid-column:8;grid-row:2;background:#888;"></div>
       <div style="grid-column:8;grid-row:3;background:#888;"></div>
       <div style="grid-column:8;grid-row:4;background:#888;"></div>
@@ -144,16 +151,14 @@ function playGame(){
       <div style="grid-column:4;grid-row:8;background:#888;"></div>
       <div style="grid-column:5;grid-row:8;background:#888;"></div>
 
-      <!-- 🎯 Token placeholders (future use) -->
-      <div id="tokens"></div>
-
     </div>
 
-    <p>Board Ready ✔ Next: Tokens + Dice</p>
+    <p>✔ Clean Board Loaded</p>
 
   </div>
   `;
 }
+
 function createRoom(){
 alert("Create Room Coming Soon 🚀");
 }
