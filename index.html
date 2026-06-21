@@ -1,155 +1,177 @@
-// Game Core Constants & Configurations
-const BOARD_SIZE = 15;
-const COLORS = ['red', 'green', 'yellow', 'blue'];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-// Global Engine State Tracker
-let gameState = {
-    currentPlayerIndex: 0,
-    currentDiceRoll: null,
-    hasRolled: false,
-    // Track coordinate position mappings: -1 means locked inside Base Home
-    tokens: {
-        red: [{ pos: -1, elementId: 'red-0' }],
-        green: [{ pos: -1, elementId: 'green-0' }],
-        yellow: [{ pos: -1, elementId: 'yellow-0' }],
-        blue: [{ pos: -1, elementId: 'blue-0' }]
-    }
-};
+<title>SNHIT Ludo</title>
 
-// Precise Track Sequence Map Array for Ludo Circuit Path Movement
-const commonTrackCoordinates = [
-    {r:6, c:1}, {r:6, c:2}, {r:6, c:3}, {r:6, c:4}, {r:6, c:5},
-    {r:5, c:6}, {r:4, c:6}, {r:3, c:6}, {r:2, c:6}, {r:1, c:6}, {r:0, c:6},
-    {r:0, c:7}, {r:0, c:8},
-    {r:1, c:8}, {r:2, c:8}, {r:3, c:8}, {r:4, c:8}, {r:5, c:8},
-    {r:6, c:9}, {r:6, c:10}, {r:6, c:11}, {r:6, c:12}, {r:6, c:13}, {r:6, c:14},
-    {r:7, c:14}, {r:8, c:14},
-    {r:8, c:13}, {r:8, c:12}, {r:8, c:11}, {r:8, c:10}, {r:8, c:9},
-    {r:9, c:8}, {r:10, c:8}, {r:11, c:8}, {r:12, c:8}, {r:13, c:8}, {r:14, c:8},
-    {r:14, c:7}, {r:14, c:6},
-    {r:13, c:6}, {r:12, c:6}, {r:11, c:6}, {r:10, c:6}, {r:9, c:6},
-    {r:8, c:5}, {r:8, c:4}, {r:8, c:3}, {r:8, c:2}, {r:8, c:1}, {r:8, c:0},
-    {r:7, c:0}
-];
-
-// Entry Indexes depending on standard Ludo rules rulesets
-const START_INDEX = { red: 0, green: 13, yellow: 26, blue: 39 };
-
-// Initialize structural components dynamically 
-function buildTrackCells() {
-    const board = document.getElementById('board');
-    commonTrackCoordinates.forEach((coord, index) => {
-        const cell = document.createElement('div');
-        cell.className = 'cell common-tile';
-        cell.style.gridRowStart = coord.r + 1;
-        cell.style.gridColumnStart = coord.c + 1;
-        cell.setAttribute('data-index', index);
-        
-        // Highlight Starting safe spots
-        if(index === START_INDEX.red) cell.style.backgroundColor = 'var(--red)';
-        if(index === START_INDEX.green) cell.style.backgroundColor = 'var(--green)';
-        if(index === START_INDEX.yellow) cell.style.backgroundColor = 'var(--yellow)';
-        if(index === START_INDEX.blue) cell.style.backgroundColor = 'var(--blue)';
-        
-        board.appendChild(cell);
-    });
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
 }
 
-// Dice Roll Calculations
-document.getElementById('roll-btn').addEventListener('click', () => {
-    if (gameState.hasRolled) return;
-    
-    // Generate Random 1-6 Index
-    gameState.currentDiceRoll = Math.floor(Math.random() * 6) + 1;
-    const diceEl = document.getElementById('dice-element');
-    diceEl.innerText = gameState.currentDiceRoll;
-    
-    gameState.hasRolled = true;
-    evaluateMovableTokens();
-});
-
-// Evaluate movement rules
-function evaluateMovableTokens() {
-    const activeColor = COLORS[gameState.currentPlayerIndex];
-    const tokens = gameState.tokens[activeColor];
-    let possibleMoves = 0;
-
-    tokens.forEach(token => {
-        const el = document.getElementById(token.elementId);
-        // Can release token from yard base if a 6 is rolled
-        if (token.pos === -1 && gameState.currentDiceRoll === 6) {
-            el.classList.add('movable');
-            possibleMoves++;
-        } else if (token.pos >= 0) {
-            el.classList.add('movable');
-            possibleMoves++;
-        }
-    });
-
-    // Automatically skip turn if zero functional legal maneuvers are present
-    if (possibleMoves === 0) {
-        setTimeout(passTurn, 1000);
-    }
+body{
+background:linear-gradient(135deg,#111,#1b1b1b);
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+color:white;
 }
 
-// Process Piece movement adjustments
-document.querySelectorAll('.token').forEach(tokenElement => {
-    tokenElement.addEventListener('click', (e) => {
-        if (!e.target.classList.contains('movable')) return;
-        
-        const color = e.target.getAttribute('data-color');
-        const id = parseInt(e.target.getAttribute('data-id'));
-        const tokenData = gameState.tokens[color][id];
-        
-        if (tokenData.pos === -1 && gameState.currentDiceRoll === 6) {
-            tokenData.pos = START_INDEX[color];
-        } else {
-            tokenData.pos = (tokenData.pos + gameState.currentDiceRoll) % commonTrackCoordinates.length;
-        }
-
-        renderTokenPositions();
-        clearMovableHighlights();
-        passTurn();
-    });
-});
-
-function clearMovableHighlights() {
-    document.querySelectorAll('.token').forEach(el => el.classList.remove('movable'));
+.container{
+width:90%;
+max-width:420px;
+background:#222;
+padding:30px;
+border-radius:20px;
+text-align:center;
+border:2px solid #00ff88;
+box-shadow:0 0 20px rgba(0,255,136,.4);
 }
 
-function passTurn() {
-    gameState.currentPlayerIndex = (gameState.currentPlayerIndex + 1) % 4;
-    gameState.hasRolled = false;
-    
-    const nextColor = COLORS[gameState.currentPlayerIndex].toUpperCase();
-    const indicator = document.getElementById('turn-indicator');
-    indicator.innerHTML = `Current Turn: <strong style="color: var(--${nextColor.toLowerCase()});">${nextColor}</strong>`;
+h1{
+font-size:38px;
+color:#00ff88;
+margin-bottom:10px;
 }
 
-function renderTokenPositions() {
-    COLORS.forEach(color => {
-        gameState.tokens[color].forEach(token => {
-            const el = document.getElementById(token.elementId);
-            if (token.pos === -1) {
-                // Return to home container DOM element
-                document.querySelector(`.${color}-base .base-inner`).appendChild(el);
-            } else {
-                // Append directly to active track cell
-                const targetCell = document.querySelector(`.common-tile[data-index="${token.pos}"]`);
-                if (targetCell) targetCell.appendChild(el);
-            }
-        });
-    });
+p{
+opacity:.8;
+margin-bottom:25px;
 }
 
-// Live runtime appearance modification linkages
-document.getElementById('bg-picker').addEventListener('input', (e) => {
-    document.documentElement.style.setProperty('--board-bg', e.target.value);
-});
-document.getElementById('border-picker').addEventListener('input', (e) => {
-    document.documentElement.style.setProperty('--border-color', e.target.value);
-});
+button{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+border-radius:12px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
 
-// Primary Entry Bootloader Execution
-buildTrackCells();
-renderTokenPositions();
+.play{background:#00ff88;}
+.room{background:#2196f3;color:white;}
+.join{background:#ff9800;color:white;}
+.setting{background:#555;color:white;}
+
+button:hover{
+transform:scale(1.04);
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎲 SNHIT Ludo</h1>
+
+<p>No Ads • Online Multiplayer • Made By SNHIT</p>
+
+<button class="play" onclick="playGame()">▶️ Play</button>
+
+<button class="room" onclick="createRoom()">👥 Create Room</button>
+
+<button class="join" onclick="joinRoom()">🔑 Join Room</button>
+
+<button class="setting" onclick="settings()">⚙ Settings</button>
+
+</div>
+
+<script>
+
+function playGame(){
+  document.body.innerHTML = `
+  <div style="text-align:center;font-family:Arial;background:#111;color:white;min-height:100vh;">
+
+    <button onclick="location.reload()" style="
+      position:absolute;
+      top:10px;
+      left:10px;
+      padding:10px;
+      background:red;
+      color:white;
+      border:none;
+      border-radius:8px;
+      cursor:pointer;
+    ">⬅ Back</button>
+
+    <h2 style="color:#00ff88;padding:10px;">🎲 SNHIT Ludo Board</h2>
+
+    <div style="
+      width:360px;
+      height:360px;
+      margin:20px auto;
+      display:grid;
+      grid-template-columns:repeat(15,1fr);
+      grid-template-rows:repeat(15,1fr);
+      border:4px solid #00ff88;
+      background:#222;
+      position:relative;
+    ">
+
+      <!-- 🔴 RED HOME -->
+      <div style="grid-column:1/7;grid-row:1/7;background:#ff4d4d;"></div>
+
+      <!-- 🟢 GREEN HOME -->
+      <div style="grid-column:10/16;grid-row:1/7;background:#2ecc71;"></div>
+
+      <!-- 🟡 YELLOW HOME -->
+      <div style="grid-column:1/7;grid-row:10/16;background:#f1c40f;"></div>
+
+      <!-- 🔵 BLUE HOME -->
+      <div style="grid-column:10/16;grid-row:10/16;background:#3498db;"></div>
+
+      <!-- ⭐ CENTER -->
+      <div style="grid-column:7/10;grid-row:7/10;background:white;"></div>
+
+      <!-- 🛣️ VERTICAL ROAD (FIXED THICKNESS) -->
+      <div style="grid-column:8;grid-row:1/16;background:#555;"></div>
+
+      <!-- 🛣️ HORIZONTAL ROAD (FIXED THICKNESS) -->
+      <div style="grid-column:1/16;grid-row:8;background:#555;"></div>
+
+      <!-- 🟩 SAFE TILES -->
+      <div style="grid-column:8;grid-row:2;background:#888;"></div>
+      <div style="grid-column:8;grid-row:3;background:#888;"></div>
+      <div style="grid-column:8;grid-row:4;background:#888;"></div>
+      <div style="grid-column:8;grid-row:5;background:#888;"></div>
+
+      <div style="grid-column:2;grid-row:8;background:#888;"></div>
+      <div style="grid-column:3;grid-row:8;background:#888;"></div>
+      <div style="grid-column:4;grid-row:8;background:#888;"></div>
+      <div style="grid-column:5;grid-row:8;background:#888;"></div>
+
+    </div>
+
+    <p>✔ Clean Ludo Board Ready</p>
+
+  </div>
+  `;
+}
+
+function createRoom(){
+alert("Create Room Coming Soon 🚀");
+}
+
+function joinRoom(){
+alert("Join Room Coming Soon 🚀");
+}
+
+function settings(){
+alert("Settings Coming Soon 🚀");
+}
+
+</script>
+
+</body>
+</html>
