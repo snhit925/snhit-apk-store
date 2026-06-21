@@ -1,95 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="module">
 
-<title>SNHIT Ludo</title>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
+const firebaseConfig = {
+  apiKey: "AIzaSyDzh_o3laTWFYqpQeMpDY6PsTDXlNhjtnM",
+  authDomain: "snhit-ludo.firebaseapp.com",
+  projectId: "snhit-ludo",
+  storageBucket: "snhit-ludo.firebasestorage.app",
+  messagingSenderId: "539128132475",
+  appId: "1:539128132475:web:8922b738348ea01046c3de"
+};
 
-body{
-background:linear-gradient(135deg,#111,#1b1b1b);
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-color:white;
-}
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-.container{
-width:90%;
-max-width:420px;
-background:#222;
-padding:30px;
-border-radius:20px;
-text-align:center;
-border:2px solid #00ff88;
-box-shadow:0 0 20px rgba(0,255,136,.4);
-}
+console.log("Firebase Connected ✅");
 
-h1{
-font-size:38px;
-color:#00ff88;
-margin-bottom:10px;
-}
-
-p{
-opacity:.8;
-margin-bottom:25px;
-}
-
-button{
-width:100%;
-padding:15px;
-margin:10px 0;
-border:none;
-border-radius:12px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-transition:.3s;
-}
-
-.play{background:#00ff88;}
-.room{background:#2196f3;color:white;}
-.join{background:#ff9800;color:white;}
-.setting{background:#555;color:white;}
-
-button:hover{
-transform:scale(1.04);
-}
-</style>
-
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>🎲 SNHIT Ludo</h1>
-
-<p>No Ads • Online Multiplayer • Made By SNHIT</p>
-
-<button class="play" onclick="playGame()">▶️ Play</button>
-
-<button class="room" onclick="createRoom()">👥 Create Room</button>
-
-<button class="join" onclick="joinRoom()">🔑 Join Room</button>
-
-<button class="setting" onclick="settings()">⚙ Settings</button>
-
-</div>
-
-<script>
-
-function playGame(){
+window.playGame = function(){
   document.body.innerHTML = `
   <div style="text-align:center;font-family:Arial;background:#111;color:white;min-height:100vh;">
 
@@ -118,60 +46,31 @@ function playGame(){
       background:#222;
       position:relative;
     ">
-
-      <!-- 🔴 RED HOME -->
       <div style="grid-column:1/7;grid-row:1/7;background:#ff4d4d;"></div>
-
-      <!-- 🟢 GREEN HOME -->
       <div style="grid-column:10/16;grid-row:1/7;background:#2ecc71;"></div>
-
-      <!-- 🟡 YELLOW HOME -->
       <div style="grid-column:1/7;grid-row:10/16;background:#f1c40f;"></div>
-
-      <!-- 🔵 BLUE HOME -->
       <div style="grid-column:10/16;grid-row:10/16;background:#3498db;"></div>
-
-      <!-- ⭐ CENTER -->
       <div style="grid-column:7/10;grid-row:7/10;background:white;"></div>
-
-      <!-- 🛣️ VERTICAL ROAD (FIXED THICKNESS) -->
       <div style="grid-column:8;grid-row:1/16;background:#555;"></div>
-
-      <!-- 🛣️ HORIZONTAL ROAD (FIXED THICKNESS) -->
       <div style="grid-column:1/16;grid-row:8;background:#555;"></div>
-
-      <!-- 🟩 SAFE TILES -->
-      <div style="grid-column:8;grid-row:2;background:#888;"></div>
-      <div style="grid-column:8;grid-row:3;background:#888;"></div>
-      <div style="grid-column:8;grid-row:4;background:#888;"></div>
-      <div style="grid-column:8;grid-row:5;background:#888;"></div>
-
-      <div style="grid-column:2;grid-row:8;background:#888;"></div>
-      <div style="grid-column:3;grid-row:8;background:#888;"></div>
-      <div style="grid-column:4;grid-row:8;background:#888;"></div>
-      <div style="grid-column:5;grid-row:8;background:#888;"></div>
-
     </div>
 
-    <p>✔ Clean Ludo Board Ready</p>
+    <p>✔ Firebase Connected</p>
 
   </div>
   `;
 }
 
-function createRoom(){
-alert("Create Room Coming Soon 🚀");
+window.createRoom = function(){
+  alert("Firebase Connected ✅\nRoom System Next Step");
 }
 
-function joinRoom(){
-alert("Join Room Coming Soon 🚀");
+window.joinRoom = function(){
+  alert("Join Room Next Step");
 }
 
-function settings(){
-alert("Settings Coming Soon 🚀");
+window.settings = function(){
+  alert("Settings Coming Soon 🚀");
 }
 
 </script>
-
-</body>
-</html>
