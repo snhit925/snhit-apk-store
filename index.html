@@ -52,7 +52,6 @@ width:100%;
 padding:12px;
 border:none;
 border-radius:8px;
-background:#0095f6;
 color:white;
 font-size:16px;
 font-weight:bold;
@@ -60,8 +59,12 @@ cursor:pointer;
 margin-top:10px;
 }
 
-button:hover{
-opacity:.9;
+.registerBtn{
+background:#0095f6;
+}
+
+.loginBtn{
+background:#28a745;
 }
 
 #msg{
@@ -79,16 +82,21 @@ font-weight:bold;
 <input type="email" id="email" placeholder="Email">
 <input type="password" id="password" placeholder="Password">
 
-<button onclick="register()">Create Account</button>
+<button class="registerBtn" onclick="register()">Create Account</button>
+
+<button class="loginBtn" onclick="login()">Login</button>
 
 <p id="msg"></p>
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
 import {
 getAuth,
-createUserWithEmailAndPassword
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -117,6 +125,81 @@ document.getElementById("msg").innerHTML="❌ "+error.message;
 });
 
 }
+
+window.login = function(){
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth,email,password)
+
+.then(()=>{
+
+document.body.innerHTML = `
+
+<style>
+body{
+margin:0;
+background:#fafafa;
+font-family:Arial;
+}
+
+.topbar{
+background:white;
+padding:15px;
+font-size:28px;
+font-weight:bold;
+border-bottom:1px solid #ddd;
+position:sticky;
+top:0;
+}
+
+.feed{
+padding:15px;
+}
+
+.post{
+background:white;
+padding:15px;
+border-radius:12px;
+margin-bottom:15px;
+box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+</style>
+
+<div class="topbar">
+📸 Mini Instagram
+</div>
+
+<div class="feed">
+
+<div class="post">
+<h3>@rohit</h3>
+<p>Hello Instagram 🚀</p>
+</div>
+
+<div class="post">
+<h3>@user</h3>
+<p>My First Post ❤️</p>
+</div>
+
+<div class="post">
+<h3>@friend</h3>
+<p>Welcome to Mini Instagram 😎</p>
+</div>
+
+</div>
+
+`;
+
+})
+
+.catch(error=>{
+document.getElementById("msg").innerHTML="❌ "+error.message;
+});
+
+}
+
 </script>
 
 </body>
