@@ -13,9 +13,7 @@ box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
-body{
-background:#fafafa;
-}
+body{background:#fafafa;}
 
 /* AUTH */
 #authPage{
@@ -36,145 +34,88 @@ box-shadow:0 0 15px rgba(0,0,0,.1);
 text-align:center;
 }
 
-.logo{
-font-size:32px;
-font-weight:bold;
-margin-bottom:20px;
-}
-
-input{
+input,button{
 width:100%;
 padding:12px;
-margin:8px 0;
-border:1px solid #ddd;
-border-radius:8px;
-font-size:16px;
-}
-
-button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:8px;
-color:white;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
 margin-top:10px;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:16px;
 }
 
+button{color:white;border:none;cursor:pointer;}
 .registerBtn{background:#0095f6;}
 .loginBtn{background:#28a745;}
 
-#msg{
-margin-top:15px;
-font-size:14px;
-font-weight:bold;
-}
+#msg{margin-top:10px;font-weight:bold;}
 
-/* FEED */
-#feedPage{
+/* APP */
+#app{
 display:none;
 }
 
+/* TOP */
 .topbar{
 display:flex;
 justify-content:space-between;
-align-items:center;
 padding:15px;
 background:white;
 border-bottom:1px solid #ddd;
-position:sticky;
-top:0;
-z-index:100;
-}
-
-.logoTop{
-font-size:24px;
-font-weight:bold;
 }
 
 .logoutBtn{
 background:red;
-padding:8px 12px;
 width:auto;
-font-size:14px;
+padding:8px 12px;
 }
 
+/* STORIES */
 .stories{
 display:flex;
 overflow-x:auto;
 background:white;
-padding:12px;
+padding:10px;
 border-bottom:1px solid #ddd;
 }
 
-.story{
-margin-right:15px;
-text-align:center;
-}
-
 .storyCircle{
-width:65px;
-height:65px;
-border-radius:50%;
+width:60px;height:60px;border-radius:50%;
 background:linear-gradient(45deg,orange,red,purple);
 padding:3px;
-}
-
-.storyInner{
-width:100%;
-height:100%;
-background:white;
-border-radius:50%;
-}
-
-.story p{
-font-size:12px;
-margin-top:5px;
-}
-
-.feed{
-padding:10px;
-padding-bottom:90px;
-}
-
-.post{
-background:white;
-border-radius:12px;
-overflow:hidden;
-margin-bottom:15px;
-box-shadow:0 2px 8px rgba(0,0,0,.08);
-}
-
-.postHeader{
-display:flex;
-align-items:center;
-padding:12px;
-}
-
-.avatar{
-width:40px;
-height:40px;
-border-radius:50%;
-background:#ccc;
 margin-right:10px;
 }
 
-.post img{
-width:100%;
-display:block;
+/* FEED */
+.feed{padding:10px;padding-bottom:80px;}
+
+.post{
+background:white;
+margin-bottom:15px;
+border-radius:10px;
+overflow:hidden;
 }
 
-.actions{
-padding:10px;
-font-size:24px;
+.post img{width:100%;}
+
+.actions{padding:10px;font-size:20px;}
+
+.caption{padding:10px;}
+
+/* PROFILE */
+#profilePage{
+display:none;
+padding:20px;
+text-align:center;
 }
 
-.caption{
-padding:0 10px 15px;
+.profileBox{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,.1);
 }
 
+/* BOTTOM NAV */
 .bottomNav{
 position:fixed;
 bottom:0;
@@ -185,64 +126,80 @@ display:flex;
 justify-content:space-around;
 padding:12px;
 border-top:1px solid #ddd;
-font-size:24px;
+font-size:20px;
 }
+
+.bottomNav div{
+cursor:pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- AUTH PAGE -->
+<!-- AUTH -->
 <div id="authPage">
 <div class="card">
+<h2>Mini Instagram</h2>
 
-<div class="logo">Mini Instagram</div>
+<input id="email" type="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
 
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-
-<button class="registerBtn" onclick="register()">Create Account</button>
+<button class="registerBtn" onclick="register()">Register</button>
 <button class="loginBtn" onclick="login()">Login</button>
 
 <p id="msg"></p>
-
 </div>
 </div>
 
-<!-- FEED PAGE -->
-<div id="feedPage">
+<!-- APP -->
+<div id="app">
+
+<!-- HOME -->
+<div id="homePage">
 
 <div class="topbar">
-<div class="logoTop">Mini Instagram</div>
-<button id="logoutBtn" class="logoutBtn">Logout</button>
+<h3>Home</h3>
+<button class="logoutBtn" onclick="logout()">Logout</button>
 </div>
 
 <div class="stories">
-<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>You</p></div>
-<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>Rohit</p></div>
-<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>User1</p></div>
-<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>User2</p></div>
+<div class="storyCircle"></div>
+<div class="storyCircle"></div>
+<div class="storyCircle"></div>
 </div>
 
 <div class="feed">
 
 <div class="post">
-<div class="postHeader"><div class="avatar"></div><b>@rohit</b></div>
-<img src="https://picsum.photos/500/350?1">
+<img src="https://picsum.photos/500/300?1">
 <div class="actions">❤️ 💬 📤</div>
-<div class="caption"><b>@rohit</b> Hello Instagram 🚀</div>
+<div class="caption">Hello Instagram 🚀</div>
 </div>
 
 <div class="post">
-<div class="postHeader"><div class="avatar"></div><b>@friend</b></div>
-<img src="https://picsum.photos/500/350?2">
+<img src="https://picsum.photos/500/300?2">
 <div class="actions">❤️ 💬 📤</div>
-<div class="caption"><b>@friend</b> My First Post ❤️</div>
+<div class="caption">My First Post ❤️</div>
 </div>
 
 </div>
+</div>
 
-<div class="bottomNav">🏠 🔍 ➕ ❤️ 👤</div>
+<!-- PROFILE -->
+<div id="profilePage">
+<div class="profileBox">
+<h2>My Profile 👤</h2>
+<p id="userEmail">Email</p>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="bottomNav">
+<div onclick="showHome()">🏠</div>
+<div onclick="showProfile()">👤</div>
+</div>
 
 </div>
 
@@ -269,44 +226,44 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const authPage = document.getElementById("authPage");
-const feedPage = document.getElementById("feedPage");
+const appDiv = document.getElementById("app");
+const userEmail = document.getElementById("userEmail");
 
-// REGISTER
 window.register = async function(){
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-try{
 await createUserWithEmailAndPassword(auth,email,password);
-document.getElementById("msg").innerHTML="✅ Account Created";
-}catch(e){
-document.getElementById("msg").innerHTML="❌ "+e.message;
-}
+document.getElementById("msg").innerText="Registered";
 };
 
-// LOGIN
 window.login = async function(){
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
-try{
 await signInWithEmailAndPassword(auth,email,password);
 
-// ✅ FIXED NAVIGATION
 authPage.style.display="none";
-feedPage.style.display="block";
+appDiv.style.display="block";
 
-}catch(e){
-document.getElementById("msg").innerHTML="❌ "+e.message;
-}
+userEmail.innerText = email;
 };
 
-// LOGOUT
-document.getElementById("logoutBtn").addEventListener("click", async ()=>{
+window.logout = async function(){
 await signOut(auth);
 authPage.style.display="flex";
-feedPage.style.display="none";
-});
+appDiv.style.display="none";
+};
+
+window.showHome = function(){
+document.getElementById("homePage").style.display="block";
+document.getElementById("profilePage").style.display="none";
+};
+
+window.showProfile = function(){
+document.getElementById("homePage").style.display="none";
+document.getElementById("profilePage").style.display="block";
+};
 
 </script>
 
