@@ -1,295 +1,122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ludo Web Game</title>
-    <style>
-        /* --- CSS STYLING --- */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Instagram</title>
 
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #2c3e50;
-            font-family: Arial, sans-serif;
-        }
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
-        /* Ludo Board Container */
-        .ludo-container {
-            width: 600px;
-            height: 600px;
-            background-color: #fff;
-            border: 5px solid #333;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-        }
+body{
+background:#fafafa;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+padding:15px;
+}
 
-        .row {
-            display: flex;
-            width: 100%;
-        }
+.card{
+width:100%;
+max-width:350px;
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.1);
+text-align:center;
+}
 
-        /* Yards (Starting zones) */
-        .yard {
-            width: 40%;
-            height: 240px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border: 1px solid #000;
-        }
+.logo{
+font-size:32px;
+font-weight:bold;
+margin-bottom:20px;
+}
 
-        .red-yard { background-color: #e74c3c; }
-        .green-yard { background-color: #2ecc71; }
-        .blue-yard { background-color: #3498db; }
-        .yellow-yard { background-color: #f1c40f; }
+input{
+width:100%;
+padding:12px;
+margin:8px 0;
+border:1px solid #ddd;
+border-radius:8px;
+font-size:16px;
+}
 
-        .token-box {
-            width: 70%;
-            height: 70%;
-            background-color: #fff;
-            border-radius: 10px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            padding: 15px;
-        }
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#0095f6;
+color:white;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+margin-top:10px;
+}
 
-        /* Tokens Style */
-        .token {
-            border-radius: 50%;
-            border: 3px solid #fff;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            cursor: pointer;
-        }
-        .red-token { background-color: #c0392b; }
-        .green-token { background-color: #27ae60; }
-        .blue-token { background-color: #2980b9; }
-        .yellow-token { background-color: #f39c12; }
+button:hover{
+opacity:.9;
+}
 
-        /* Paths & Grid System */
-        .path-vertical {
-            width: 20%;
-            height: 240px;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(6, 1fr);
-        }
-
-        .path-horizontal {
-            width: 40%;
-            height: 120px;
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-        }
-
-        .middle-row {
-            height: 120px;
-        }
-
-        .cell {
-            border: 1px solid #ccc;
-            background-color: #fff;
-        }
-
-        .cellstar {
-            border: 1px solid #ccc;
-            background-color: #f5f5f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-        }
-
-        /* Home Paths */
-        .red-home { background-color: #ff4d4d; }
-        .green-home { background-color: #2ecc71; }
-        .blue-home { background-color: #3498db; }
-        .yellow-home { background-color: #f1c40f; }
-
-        /* Center Triangle Home */
-        .center-home {
-            width: 20%;
-            height: 120px;
-            position: relative;
-            background-color: #fff;
-            border: 1px solid #000;
-        }
-
-        .triangle {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border-style: solid;
-        }
-
-        .red-triangle {
-            border-width: 60px 0 60px 60px;
-            border-color: transparent transparent transparent #e74c3c;
-            top: 0; left: 0;
-        }
-
-        .green-triangle {
-            border-width: 0 60px 60px 60px;
-            border-color: transparent transparent #2ecc71 transparent;
-            top: 0; left: 0;
-        }
-
-        .yellow-triangle {
-            border-width: 60px 60px 60px 0;
-            border-color: transparent #f1c40f transparent transparent;
-            top: 0; right: 0;
-        }
-
-        .blue-triangle {
-            border-width: 60px 60px 0 60px;
-            border-color: #3498db transparent transparent transparent;
-            bottom: 0; left: 0;
-        }
-
-        /* Dice UI Below Board */
-        .dice-section {
-            margin-top: 20px;
-        }
-
-        .dice {
-            width: 60px;
-            height: 60px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            cursor: pointer;
-            user-select: none;
-            transition: transform 0.2s;
-        }
-        
-        .dice:active {
-            transform: scale(0.9);
-        }
-    </style>
+#msg{
+margin-top:15px;
+font-size:14px;
+font-weight:bold;
+}
+</style>
 </head>
 <body>
 
-<div class="ludo-container">
-    <div class="row">
-        <div class="yard red-yard">
-            <div class="token-box">
-                <div class="token red-token" id="red-t1"></div>
-                <div class="token red-token" id="red-t2"></div>
-                <div class="token red-token" id="red-t3"></div>
-                <div class="token red-token" id="red-t4"></div>
-            </div>
-        </div>
-        
-        <div class="path-vertical">
-            <div class="cell"></div><div class="cell green-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell green-home"></div><div class="cell"></div>
-            <div class="cellstar">⭐</div><div class="cell green-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell green-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell green-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell green-home"></div><div class="cell"></div>
-        </div>
+<div class="card">
+<div class="logo">Mini Instagram</div>
 
-        <div class="yard green-yard">
-            <div class="token-box">
-                <div class="token green-token" id="green-t1"></div>
-                <div class="token green-token" id="green-t2"></div>
-                <div class="token green-token" id="green-t3"></div>
-                <div class="token green-token" id="green-t4"></div>
-            </div>
-        </div>
-    </div>
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
 
-    <div class="row middle-row">
-        <div class="path-horizontal">
-            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell red-home"></div><div class="cell red-home"></div><div class="cell red-home"></div><div class="cell red-home"></div><div class="cell red-home"></div>
-            <div class="cell"></div><div class="cellstar">⭐</div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-        </div>
+<button onclick="register()">Create Account</button>
 
-        <div class="center-home">
-            <div class="triangle red-triangle"></div>
-            <div class="triangle green-triangle"></div>
-            <div class="triangle yellow-triangle"></div>
-            <div class="triangle blue-triangle"></div>
-        </div>
-
-        <div class="path-horizontal">
-            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cellstar">⭐</div><div class="cell"></div>
-            <div class="cell yellow-home"></div><div class="yellow-home cell"></div><div class="cell yellow-home"></div><div class="cell yellow-home"></div><div class="cell yellow-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div><div class="cell"></div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="yard blue-yard">
-            <div class="token-box">
-                <div class="token blue-token" id="blue-t1"></div>
-                <div class="token blue-token" id="blue-t2"></div>
-                <div class="token blue-token" id="blue-t3"></div>
-                <div class="token blue-token" id="blue-t4"></div>
-            </div>
-        </div>
-
-        <div class="path-vertical">
-            <div class="cell"></div><div class="cell blue-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell blue-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell blue-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell blue-home"></div><div class="cellstar">⭐</div>
-            <div class="cell"></div><div class="cell blue-home"></div><div class="cell"></div>
-            <div class="cell"></div><div class="cell blue-home"></div><div class="cell"></div>
-        </div>
-
-        <div class="yard yellow-yard">
-            <div class="token-box">
-                <div class="token yellow-token" id="yellow-t1"></div>
-                <div class="token yellow-token" id="yellow-t2"></div>
-                <div class="token yellow-token" id="yellow-t3"></div>
-                <div class="token yellow-token" id="yellow-t4"></div>
-            </div>
-        </div>
-    </div>
+<p id="msg"></p>
 </div>
 
-<div class="dice-section">
-    <div class="dice" id="dice-view">⚀</div>
-</div>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+getAuth,
+createUserWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
-<script>
-    const diceElement = document.getElementById('dice-view');
-    const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+const firebaseConfig = {
+apiKey: "AIzaSyDv0KqtYwTRBpEeONHF3trPPUIx0iRFBIw",
+authDomain: "mini-instagram-f7714.firebaseapp.com",
+projectId: "mini-instagram-f7714",
+storageBucket: "mini-instagram-f7714.firebasestorage.app",
+messagingSenderId: "1060098135153",
+appId: "1:1060098135153:web:5e28b7e67312af593277d0"
+};
 
-    // Dice Roll Event Listener
-    diceElement.addEventListener('click', () => {
-        // Simple random roll logic
-        const rollValue = Math.floor(Math.random() * 6) + 1;
-        diceElement.textContent = diceFaces[rollValue - 1];
-        
-        console.log("Dice Rolled: " + rollValue);
-        // TODO: Is 'rollValue' ko use karke apni game logic aur token movement yahan likhein.
-    });
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    // Tokens click handle karne ke liye ready template
-    document.querySelectorAll('.token').forEach(token => {
-        token.addEventListener('click', (e) => {
-            console.log("Clicked Token ID: " + e.target.id);
-            // TODO: Token ko aage badhane ki logic yahan add karein.
-        });
-    });
+window.register = function(){
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>{
+document.getElementById("msg").innerHTML="✅ Account Created";
+})
+.catch(error=>{
+document.getElementById("msg").innerHTML="❌ "+error.message;
+});
+
+}
 </script>
 
 </body>
