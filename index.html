@@ -13,7 +13,9 @@ box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
 
-body{background:#fafafa;}
+body{
+background:#fafafa;
+}
 
 /* AUTH */
 #authPage{
@@ -43,18 +45,25 @@ border:1px solid #ddd;
 font-size:16px;
 }
 
-button{color:white;border:none;cursor:pointer;}
+button{
+color:white;
+border:none;
+cursor:pointer;
+}
+
 .registerBtn{background:#0095f6;}
 .loginBtn{background:#28a745;}
 
-#msg{margin-top:10px;font-weight:bold;}
+#msg{
+margin-top:10px;
+font-weight:bold;
+}
 
-/* APP */
-#app{
+/* FEED */
+#feedPage{
 display:none;
 }
 
-/* TOP */
 .topbar{
 display:flex;
 justify-content:space-between;
@@ -69,7 +78,6 @@ width:auto;
 padding:8px 12px;
 }
 
-/* STORIES */
 .stories{
 display:flex;
 overflow-x:auto;
@@ -79,14 +87,18 @@ border-bottom:1px solid #ddd;
 }
 
 .storyCircle{
-width:60px;height:60px;border-radius:50%;
+width:60px;
+height:60px;
+border-radius:50%;
 background:linear-gradient(45deg,orange,red,purple);
 padding:3px;
 margin-right:10px;
 }
 
-/* FEED */
-.feed{padding:10px;padding-bottom:80px;}
+.feed{
+padding:10px;
+padding-bottom:80px;
+}
 
 .post{
 background:white;
@@ -95,27 +107,96 @@ border-radius:10px;
 overflow:hidden;
 }
 
-.post img{width:100%;}
+.post img{
+width:100%;
+}
 
-.actions{padding:10px;font-size:20px;}
+.actions{
+padding:10px;
+font-size:20px;
+}
 
-.caption{padding:10px;}
+.caption{
+padding:10px;
+}
 
 /* PROFILE */
 #profilePage{
 display:none;
-padding:20px;
+background:black;
+min-height:100vh;
+color:white;
+padding:15px;
+padding-bottom:80px;
+}
+
+.profile-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.profile-top{
+display:flex;
+align-items:center;
+gap:25px;
+}
+
+.profile-pic-box img{
+width:90px;
+height:90px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.profile-stats{
+display:flex;
+gap:25px;
 text-align:center;
 }
 
-.profileBox{
-background:white;
-padding:20px;
-border-radius:12px;
-box-shadow:0 0 10px rgba(0,0,0,.1);
+.profile-bio{
+margin-top:20px;
 }
 
-/* BOTTOM NAV */
+.profile-buttons{
+display:flex;
+gap:10px;
+margin-top:15px;
+}
+
+.profile-buttons button{
+flex:1;
+padding:10px;
+background:#2a2a2a;
+color:white;
+border:none;
+}
+
+.profile-tabs{
+display:flex;
+justify-content:space-around;
+margin-top:20px;
+font-size:24px;
+border-bottom:1px solid #333;
+padding-bottom:10px;
+}
+
+.profile-posts-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:3px;
+margin-top:10px;
+}
+
+.profile-posts-grid img{
+width:100%;
+height:120px;
+object-fit:cover;
+}
+
+/* NAV */
 .bottomNav{
 position:fixed;
 bottom:0;
@@ -132,17 +213,17 @@ font-size:20px;
 .bottomNav div{
 cursor:pointer;
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- AUTH -->
+<!-- AUTH PAGE -->
 <div id="authPage">
 <div class="card">
 <h2>Mini Instagram</h2>
 
+<input id="username" type="text" placeholder="Username">
 <input id="email" type="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
 
@@ -153,11 +234,8 @@ cursor:pointer;
 </div>
 </div>
 
-<!-- APP -->
-<div id="app">
-
-<!-- HOME -->
-<div id="homePage">
+<!-- FEED PAGE -->
+<div id="feedPage">
 
 <div class="topbar">
 <h3>Home</h3>
@@ -171,7 +249,6 @@ cursor:pointer;
 </div>
 
 <div class="feed">
-
 <div class="post">
 <img src="https://picsum.photos/500/300?1">
 <div class="actions">❤️ 💬 📤</div>
@@ -183,24 +260,71 @@ cursor:pointer;
 <div class="actions">❤️ 💬 📤</div>
 <div class="caption">My First Post ❤️</div>
 </div>
-
-</div>
 </div>
 
-<!-- PROFILE -->
+</div>
+
+<!-- PROFILE PAGE -->
 <div id="profilePage">
-<div class="profileBox">
-<h2>My Profile 👤</h2>
+
+<div class="profile-header">
+<span onclick="showFeed()">←</span>
+<h2 id="profileUsername">username</h2>
+<span>☰</span>
+</div>
+
+<div class="profile-top">
+<div class="profile-pic-box">
+<img src="https://picsum.photos/200">
+</div>
+
+<div class="profile-stats">
+<div>
+<h3>2</h3>
+<p>Posts</p>
+</div>
+
+<div>
+<h3>107</h3>
+<p>Followers</p>
+</div>
+
+<div>
+<h3>98</h3>
+<p>Following</p>
+</div>
+</div>
+</div>
+
+<div class="profile-bio">
+<h4 id="realName">User Name</h4>
 <p id="userEmail">Email</p>
 </div>
+
+<div class="profile-buttons">
+<button>Edit Profile</button>
+<button>Share Profile</button>
 </div>
 
-<!-- BOTTOM NAV -->
+<div class="profile-tabs">
+<span>▦</span>
+<span>▶</span>
+<span>⟳</span>
+<span>👤</span>
+</div>
+
+<div class="profile-posts-grid">
+<img src="https://picsum.photos/200?1">
+<img src="https://picsum.photos/200?2">
+<img src="https://picsum.photos/200?3">
+</div>
+
+</div>
+
+<!-- NAV -->
 <div class="bottomNav">
-<div onclick="showHome()">🏠</div>
+<div onclick="showFeed()">🏠</div>
 <div onclick="showProfile()">👤</div>
-</div>
-
 </div>
 
 <script type="module">
@@ -226,43 +350,52 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 const authPage = document.getElementById("authPage");
-const appDiv = document.getElementById("app");
-const userEmail = document.getElementById("userEmail");
+const feedPage = document.getElementById("feedPage");
+const profilePage = document.getElementById("profilePage");
 
 window.register = async function(){
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
 await createUserWithEmailAndPassword(auth,email,password);
-document.getElementById("msg").innerText="Registered";
+
+document.getElementById("msg").innerText="Registered Successfully";
 };
 
 window.login = async function(){
 const email = document.getElementById("email").value;
+const username = document.getElementById("username").value;
 const password = document.getElementById("password").value;
 
 await signInWithEmailAndPassword(auth,email,password);
 
-authPage.style.display="none";
-appDiv.style.display="block";
+document.getElementById("userEmail").innerText=email;
+document.getElementById("profileUsername").innerText=username || "user";
+document.getElementById("realName").innerText=username || "User";
 
-userEmail.innerText = email;
+showFeed();
 };
 
 window.logout = async function(){
 await signOut(auth);
-authPage.style.display="flex";
-appDiv.style.display="none";
+showAuth();
 };
 
-window.showHome = function(){
-document.getElementById("homePage").style.display="block";
-document.getElementById("profilePage").style.display="none";
+window.showFeed = function(){
+authPage.style.display="none";
+feedPage.style.display="block";
+profilePage.style.display="none";
 };
 
 window.showProfile = function(){
-document.getElementById("homePage").style.display="none";
-document.getElementById("profilePage").style.display="block";
+feedPage.style.display="none";
+profilePage.style.display="block";
+};
+
+window.showAuth = function(){
+authPage.style.display="flex";
+feedPage.style.display="none";
+profilePage.style.display="none";
 };
 
 </script>
