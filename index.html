@@ -15,6 +15,10 @@ font-family:Arial,sans-serif;
 
 body{
 background:#fafafa;
+}
+
+/* AUTH */
+#authPage{
 display:flex;
 justify-content:center;
 align-items:center;
@@ -59,104 +63,18 @@ cursor:pointer;
 margin-top:10px;
 }
 
-.registerBtn{
-background:#0095f6;
-}
-
-.loginBtn{
-background:#28a745;
-}
+.registerBtn{background:#0095f6;}
+.loginBtn{background:#28a745;}
 
 #msg{
 margin-top:15px;
 font-size:14px;
 font-weight:bold;
 }
-</style>
-</head>
 
-<body>
-
-<div class="card">
-<div class="logo">Mini Instagram</div>
-
-<input type="email" id="email" placeholder="Email">
-<input type="password" id="password" placeholder="Password">
-
-<button class="registerBtn" onclick="register()">
-Create Account
-</button>
-
-<button class="loginBtn" onclick="login()">
-Login
-</button>
-
-<p id="msg"></p>
-</div>
-
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
-
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword
-}
-from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
-
-const firebaseConfig = {
-apiKey: "AIzaSyDv0KqtYwTRBpEeONHF3trPPUIx0iRFBIw",
-authDomain: "mini-instagram-f7714.firebaseapp.com",
-projectId: "mini-instagram-f7714",
-storageBucket: "mini-instagram-f7714.firebasestorage.app",
-messagingSenderId: "1060098135153",
-appId: "1:1060098135153:web:5e28b7e67312af593277d0"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-window.register = function(){
-
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-createUserWithEmailAndPassword(auth,email,password)
-
-.then(()=>{
-document.getElementById("msg").innerHTML =
-"✅ Account Created";
-})
-
-.catch(error=>{
-document.getElementById("msg").innerHTML =
-"❌ " + error.message;
-});
-
-}
-
-window.login = function(){
-
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-signInWithEmailAndPassword(auth,email,password)
-
-.then(()=>{
-
-document.body.innerHTML = `
-
-<style>
-
-body{
-margin:0;
-background:#fafafa;
-font-family:Arial,sans-serif;
-display:block;
-height:auto;
-padding:0;
+/* FEED */
+#feedPage{
+display:none;
 }
 
 .topbar{
@@ -176,6 +94,13 @@ font-size:24px;
 font-weight:bold;
 }
 
+.logoutBtn{
+background:red;
+padding:8px 12px;
+width:auto;
+font-size:14px;
+}
+
 .stories{
 display:flex;
 overflow-x:auto;
@@ -193,12 +118,7 @@ text-align:center;
 width:65px;
 height:65px;
 border-radius:50%;
-background:linear-gradient(
-45deg,
-orange,
-red,
-purple
-);
+background:linear-gradient(45deg,orange,red,purple);
 padding:3px;
 }
 
@@ -267,106 +187,126 @@ padding:12px;
 border-top:1px solid #ddd;
 font-size:24px;
 }
-
 </style>
+</head>
+
+<body>
+
+<!-- AUTH PAGE -->
+<div id="authPage">
+<div class="card">
+
+<div class="logo">Mini Instagram</div>
+
+<input type="email" id="email" placeholder="Email">
+<input type="password" id="password" placeholder="Password">
+
+<button class="registerBtn" onclick="register()">Create Account</button>
+<button class="loginBtn" onclick="login()">Login</button>
+
+<p id="msg"></p>
+
+</div>
+</div>
+
+<!-- FEED PAGE -->
+<div id="feedPage">
 
 <div class="topbar">
 <div class="logoTop">Mini Instagram</div>
-<div>✉️</div>
+<button id="logoutBtn" class="logoutBtn">Logout</button>
 </div>
 
 <div class="stories">
-
-<div class="story">
-<div class="storyCircle">
-<div class="storyInner"></div>
-</div>
-<p>You</p>
-</div>
-
-<div class="story">
-<div class="storyCircle">
-<div class="storyInner"></div>
-</div>
-<p>Rohit</p>
-</div>
-
-<div class="story">
-<div class="storyCircle">
-<div class="storyInner"></div>
-</div>
-<p>User1</p>
-</div>
-
-<div class="story">
-<div class="storyCircle">
-<div class="storyInner"></div>
-</div>
-<p>User2</p>
-</div>
-
+<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>You</p></div>
+<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>Rohit</p></div>
+<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>User1</p></div>
+<div class="story"><div class="storyCircle"><div class="storyInner"></div></div><p>User2</p></div>
 </div>
 
 <div class="feed">
 
 <div class="post">
-
-<div class="postHeader">
-<div class="avatar"></div>
-<b>@rohit</b>
-</div>
-
+<div class="postHeader"><div class="avatar"></div><b>@rohit</b></div>
 <img src="https://picsum.photos/500/350?1">
-
-<div class="actions">
-❤️ 💬 📤
-</div>
-
-<div class="caption">
-<b>@rohit</b> Hello Instagram 🚀
-</div>
-
+<div class="actions">❤️ 💬 📤</div>
+<div class="caption"><b>@rohit</b> Hello Instagram 🚀</div>
 </div>
 
 <div class="post">
-
-<div class="postHeader">
-<div class="avatar"></div>
-<b>@friend</b>
-</div>
-
+<div class="postHeader"><div class="avatar"></div><b>@friend</b></div>
 <img src="https://picsum.photos/500/350?2">
-
-<div class="actions">
-❤️ 💬 📤
-</div>
-
-<div class="caption">
-<b>@friend</b> My First Post ❤️
+<div class="actions">❤️ 💬 📤</div>
+<div class="caption"><b>@friend</b> My First Post ❤️</div>
 </div>
 
 </div>
 
+<div class="bottomNav">🏠 🔍 ➕ ❤️ 👤</div>
+
 </div>
 
-<div class="bottomNav">
-🏠
-🔍
-➕
-❤️
-👤
-</div>
+<script type="module">
 
-`;
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+signOut
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
-})
+const firebaseConfig = {
+apiKey: "AIzaSyDv0KqtYwTRBpEeONHF3trPPUIx0iRFBIw",
+authDomain: "mini-instagram-f7714.firebaseapp.com",
+projectId: "mini-instagram-f7714",
+storageBucket: "mini-instagram-f7714.firebasestorage.app",
+messagingSenderId: "1060098135153",
+appId: "1:1060098135153:web:5e28b7e67312af593277d0"
+};
 
-.catch(error=>{
-document.getElementById("msg").innerHTML =
-"❌ " + error.message;
-});
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
+const authPage = document.getElementById("authPage");
+const feedPage = document.getElementById("feedPage");
+
+// REGISTER
+window.register = async function(){
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+try{
+await createUserWithEmailAndPassword(auth,email,password);
+document.getElementById("msg").innerHTML="✅ Account Created";
+}catch(e){
+document.getElementById("msg").innerHTML="❌ "+e.message;
 }
+};
+
+// LOGIN
+window.login = async function(){
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+try{
+await signInWithEmailAndPassword(auth,email,password);
+
+// ✅ FIXED NAVIGATION
+authPage.style.display="none";
+feedPage.style.display="block";
+
+}catch(e){
+document.getElementById("msg").innerHTML="❌ "+e.message;
+}
+};
+
+// LOGOUT
+document.getElementById("logoutBtn").addEventListener("click", async ()=>{
+await signOut(auth);
+authPage.style.display="flex";
+feedPage.style.display="none";
+});
 
 </script>
 
