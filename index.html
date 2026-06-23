@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Instagram</title>
+<title>Snhit Mini Insta</title>
 
 <style>
 *{
@@ -15,6 +15,21 @@ font-family:Arial,sans-serif;
 
 body{
 background:#fafafa;
+transition:.3s;
+}
+
+.dark{
+background:black;
+color:white;
+}
+
+.dark .topbar,
+.dark .bottomNav,
+.dark .post,
+.dark .stories{
+background:#111;
+color:white;
+border-color:#333;
 }
 
 /* AUTH */
@@ -24,16 +39,26 @@ justify-content:center;
 align-items:center;
 height:100vh;
 padding:15px;
+background:linear-gradient(135deg,#ff416c,#ff4b2b,#6a11cb);
 }
 
 .card{
 width:100%;
 max-width:350px;
-background:white;
+background:rgba(255,255,255,.15);
+backdrop-filter:blur(15px);
 padding:25px;
-border-radius:15px;
-box-shadow:0 0 15px rgba(0,0,0,.1);
+border-radius:20px;
 text-align:center;
+color:white;
+}
+
+.appLogo{
+font-size:28px;
+font-weight:bold;
+background:linear-gradient(45deg,#fff,#ffd700);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 input,button{
@@ -62,25 +87,22 @@ font-weight:bold;
 /* FEED */
 #feedPage{
 display:none;
+padding-bottom:80px;
 }
 
 .topbar{
 display:flex;
 justify-content:space-between;
+align-items:center;
 padding:15px;
 background:white;
 border-bottom:1px solid #ddd;
-}
-
-.logoutBtn{
-background:red;
-width:auto;
-padding:8px 12px;
+font-size:24px;
+font-weight:bold;
 }
 
 .stories{
 display:flex;
-overflow-x:auto;
 background:white;
 padding:10px;
 border-bottom:1px solid #ddd;
@@ -92,19 +114,18 @@ height:60px;
 border-radius:50%;
 background:linear-gradient(45deg,orange,red,purple);
 padding:3px;
-margin-right:10px;
 }
 
 .feed{
 padding:10px;
-padding-bottom:80px;
 }
 
 .post{
 background:white;
 margin-bottom:15px;
-border-radius:10px;
+border-radius:15px;
 overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,.08);
 }
 
 .post img{
@@ -112,8 +133,8 @@ width:100%;
 }
 
 .actions{
-padding:10px;
-font-size:20px;
+padding:12px;
+font-size:22px;
 }
 
 .caption{
@@ -190,10 +211,17 @@ gap:3px;
 margin-top:10px;
 }
 
-.profile-posts-grid img{
-width:100%;
-height:120px;
-object-fit:cover;
+.menuBox{
+display:none;
+margin-top:15px;
+background:#111;
+padding:15px;
+border-radius:10px;
+}
+
+.menuBox button{
+background:red;
+color:white;
 }
 
 /* NAV */
@@ -207,7 +235,7 @@ display:flex;
 justify-content:space-around;
 padding:12px;
 border-top:1px solid #ddd;
-font-size:20px;
+font-size:22px;
 }
 
 .bottomNav div{
@@ -218,10 +246,9 @@ cursor:pointer;
 
 <body>
 
-<!-- AUTH PAGE -->
 <div id="authPage">
 <div class="card">
-<h2>Mini Instagram</h2>
+<h2 class="appLogo">Snhit Mini Insta</h2>
 
 <input id="username" type="text" placeholder="Username">
 <input id="email" type="email" placeholder="Email">
@@ -234,17 +261,15 @@ cursor:pointer;
 </div>
 </div>
 
-<!-- FEED PAGE -->
 <div id="feedPage">
 
 <div class="topbar">
-<h3>Home</h3>
-<button class="logoutBtn" onclick="logout()">Logout</button>
+<span>＋</span>
+<h3>Snhit Mini Insta</h3>
+<span>♡</span>
 </div>
 
 <div class="stories">
-<div class="storyCircle"></div>
-<div class="storyCircle"></div>
 <div class="storyCircle"></div>
 </div>
 
@@ -262,15 +287,22 @@ cursor:pointer;
 </div>
 </div>
 
+<div class="bottomNav">
+<div onclick="showFeed()">🏠</div>
+<div>🎬</div>
+<div>❤️</div>
+<div>🔍</div>
+<div onclick="showProfile()">👤</div>
 </div>
 
-<!-- PROFILE PAGE -->
+</div>
+
 <div id="profilePage">
 
 <div class="profile-header">
 <span onclick="showFeed()">←</span>
 <h2 id="profileUsername">username</h2>
-<span>☰</span>
+<span onclick="toggleMenu()">☰</span>
 </div>
 
 <div class="profile-top">
@@ -279,20 +311,9 @@ cursor:pointer;
 </div>
 
 <div class="profile-stats">
-<div>
-<h3>2</h3>
-<p>Posts</p>
-</div>
-
-<div>
-<h3>107</h3>
-<p>Followers</p>
-</div>
-
-<div>
-<h3>98</h3>
-<p>Following</p>
-</div>
+<div><h3>0</h3><p>Posts</p></div>
+<div><h3>0</h3><p>Followers</p></div>
+<div><h3>0</h3><p>Following</p></div>
 </div>
 </div>
 
@@ -306,6 +327,11 @@ cursor:pointer;
 <button>Share Profile</button>
 </div>
 
+<div id="menuBox" class="menuBox">
+<button onclick="toggleTheme()">Dark Theme</button>
+<button onclick="logout()">Logout</button>
+</div>
+
 <div class="profile-tabs">
 <span>▦</span>
 <span>▶</span>
@@ -313,22 +339,19 @@ cursor:pointer;
 <span>👤</span>
 </div>
 
-<div class="profile-posts-grid">
-<img src="https://picsum.photos/200?1">
-<img src="https://picsum.photos/200?2">
-<img src="https://picsum.photos/200?3">
-</div>
+<div class="profile-posts-grid"></div>
 
-</div>
-
-<!-- NAV -->
 <div class="bottomNav">
 <div onclick="showFeed()">🏠</div>
+<div>🎬</div>
+<div>❤️</div>
+<div>🔍</div>
 <div onclick="showProfile()">👤</div>
 </div>
 
-<script type="module">
+</div>
 
+<script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
 import {
 getAuth,
@@ -338,12 +361,12 @@ signOut
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyDv0KqtYwTRBpEeONHF3trPPUIx0iRFBIw",
-authDomain: "mini-instagram-f7714.firebaseapp.com",
-projectId: "mini-instagram-f7714",
-storageBucket: "mini-instagram-f7714.firebasestorage.app",
-messagingSenderId: "1060098135153",
-appId: "1:1060098135153:web:5e28b7e67312af593277d0"
+apiKey:"AIzaSyDv0KqtYwTRBpEeONHF3trPPUIx0iRFBIw",
+authDomain:"mini-instagram-f7714.firebaseapp.com",
+projectId:"mini-instagram-f7714",
+storageBucket:"mini-instagram-f7714.firebasestorage.app",
+messagingSenderId:"1060098135153",
+appId:"1:1060098135153:web:5e28b7e67312af593277d0"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -354,24 +377,28 @@ const feedPage = document.getElementById("feedPage");
 const profilePage = document.getElementById("profilePage");
 
 window.register = async function(){
+const username = document.getElementById("username").value;
 const email = document.getElementById("email").value;
 const password = document.getElementById("password").value;
 
 await createUserWithEmailAndPassword(auth,email,password);
+
+localStorage.setItem(email, username);
 
 document.getElementById("msg").innerText="Registered Successfully";
 };
 
 window.login = async function(){
 const email = document.getElementById("email").value;
-const username = document.getElementById("username").value;
 const password = document.getElementById("password").value;
 
 await signInWithEmailAndPassword(auth,email,password);
 
+const savedUsername = localStorage.getItem(email) || "user";
+
 document.getElementById("userEmail").innerText=email;
-document.getElementById("profileUsername").innerText=username || "user";
-document.getElementById("realName").innerText=username || "User";
+document.getElementById("profileUsername").innerText=savedUsername;
+document.getElementById("realName").innerText=savedUsername;
 
 showFeed();
 };
@@ -398,6 +425,14 @@ feedPage.style.display="none";
 profilePage.style.display="none";
 };
 
+window.toggleMenu = function(){
+let menu=document.getElementById("menuBox");
+menu.style.display = menu.style.display==="block" ? "none" : "block";
+};
+
+window.toggleTheme = function(){
+document.body.classList.toggle("dark");
+};
 </script>
 
 </body>
