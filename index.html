@@ -23,22 +23,12 @@ background:black;
 color:white;
 }
 
-.dark .topbar,
-.dark .bottomNav,
-.dark .post,
-.dark .stories{
-background:#111;
-color:white;
-border-color:#333;
-}
-
 /* AUTH */
 #authPage{
 display:flex;
 justify-content:center;
 align-items:center;
 height:100vh;
-padding:15px;
 background:linear-gradient(135deg,#ff416c,#ff4b2b,#6a11cb);
 }
 
@@ -46,19 +36,9 @@ background:linear-gradient(135deg,#ff416c,#ff4b2b,#6a11cb);
 width:100%;
 max-width:350px;
 background:rgba(255,255,255,.15);
-backdrop-filter:blur(15px);
 padding:25px;
 border-radius:20px;
-text-align:center;
 color:white;
-}
-
-.appLogo{
-font-size:28px;
-font-weight:bold;
-background:linear-gradient(45deg,#fff,#ffd700);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
 }
 
 input,button{
@@ -66,80 +46,11 @@ width:100%;
 padding:12px;
 margin-top:10px;
 border-radius:8px;
-border:1px solid #ddd;
-font-size:16px;
-}
-
-button{
-color:white;
 border:none;
-cursor:pointer;
 }
 
 .registerBtn{background:#0095f6;}
 .loginBtn{background:#28a745;}
-
-#msg{
-margin-top:10px;
-font-weight:bold;
-}
-
-/* FEED */
-#feedPage{
-display:none;
-padding-bottom:80px;
-}
-
-.topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:15px;
-background:white;
-border-bottom:1px solid #ddd;
-font-size:24px;
-font-weight:bold;
-}
-
-.stories{
-display:flex;
-background:white;
-padding:10px;
-border-bottom:1px solid #ddd;
-}
-
-.storyCircle{
-width:60px;
-height:60px;
-border-radius:50%;
-background:linear-gradient(45deg,orange,red,purple);
-padding:3px;
-}
-
-.feed{
-padding:10px;
-}
-
-.post{
-background:white;
-margin-bottom:15px;
-border-radius:15px;
-overflow:hidden;
-box-shadow:0 4px 12px rgba(0,0,0,.08);
-}
-
-.post img{
-width:100%;
-}
-
-.actions{
-padding:12px;
-font-size:22px;
-}
-
-.caption{
-padding:10px;
-}
 
 /* PROFILE */
 #profilePage{
@@ -148,74 +59,13 @@ background:black;
 min-height:100vh;
 color:white;
 padding:15px;
-padding-bottom:80px;
-}
-
-.profile-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-}
-
-.profile-top{
-display:flex;
-align-items:center;
-gap:25px;
-}
-
-.profile-pic-box img{
-width:90px;
-height:90px;
-border-radius:50%;
-object-fit:cover;
-}
-
-.profile-stats{
-display:flex;
-gap:25px;
-text-align:center;
-}
-
-.profile-bio{
-margin-top:20px;
-}
-
-.profile-buttons{
-display:flex;
-gap:10px;
-margin-top:15px;
-}
-
-.profile-buttons button{
-flex:1;
-padding:10px;
-background:#2a2a2a;
-color:white;
-border:none;
-}
-
-.profile-tabs{
-display:flex;
-justify-content:space-around;
-margin-top:20px;
-font-size:24px;
-border-bottom:1px solid #333;
-padding-bottom:10px;
-}
-
-.profile-posts-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:3px;
-margin-top:10px;
 }
 
 .menuBox{
 display:none;
-margin-top:15px;
+margin-top:10px;
 background:#111;
-padding:15px;
+padding:10px;
 border-radius:10px;
 }
 
@@ -224,130 +74,100 @@ background:red;
 color:white;
 }
 
-/* NAV */
-.bottomNav{
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-display:flex;
-justify-content:space-around;
-padding:12px;
-border-top:1px solid #ddd;
-font-size:22px;
+/* MEME BATTLE */
+#memeBattlePage{
+display:none;
+background:#111;
+color:white;
+min-height:100vh;
+padding:20px;
 }
 
-.bottomNav div{
-cursor:pointer;
+#memeBattlePage input{
+width:100%;
+padding:12px;
+margin-top:10px;
+}
+
+#memeBattlePage button{
+width:100%;
+padding:12px;
+margin-top:10px;
+background:#ff416c;
+color:white;
+border:none;
+}
+
+#playersList div{
+display:flex;
+gap:10px;
+align-items:center;
+background:#222;
+padding:10px;
+margin-top:10px;
+border-radius:10px;
+}
+
+#playersList img{
+width:40px;
+height:40px;
+border-radius:50%;
 }
 </style>
 </head>
 
 <body>
 
+<!-- AUTH -->
 <div id="authPage">
 <div class="card">
-<h2 class="appLogo">Snhit Mini Insta</h2>
+<h2>Snhit Mini Insta</h2>
 
-<input id="username" type="text" placeholder="Username">
-<input id="email" type="email" placeholder="Email">
+<input id="username" placeholder="Username">
+<input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
 
 <button class="registerBtn" onclick="register()">Register</button>
 <button class="loginBtn" onclick="login()">Login</button>
-
-<p id="msg"></p>
 </div>
 </div>
 
-<div id="feedPage">
-
-<div class="topbar">
-<span>＋</span>
-<h3>Snhit Mini Insta</h3>
-<span>♡</span>
-</div>
-
-<div class="stories">
-<div class="storyCircle"></div>
-</div>
-
-<div class="feed">
-<div class="post">
-<img src="https://picsum.photos/500/300?1">
-<div class="actions">❤️ 💬 📤</div>
-<div class="caption">Hello Instagram 🚀</div>
-</div>
-
-<div class="post">
-<img src="https://picsum.photos/500/300?2">
-<div class="actions">❤️ 💬 📤</div>
-<div class="caption">My First Post ❤️</div>
-</div>
-</div>
-
-<div class="bottomNav">
-<div onclick="showFeed()">🏠</div>
-<div>🎬</div>
-<div>❤️</div>
-<div>🔍</div>
-<div onclick="showProfile()">👤</div>
-</div>
-
-</div>
-
+<!-- PROFILE -->
 <div id="profilePage">
 
-<div class="profile-header">
+<div>
 <span onclick="showFeed()">←</span>
-<h2 id="profileUsername">username</h2>
+<h2 id="profileUsername">User</h2>
 <span onclick="toggleMenu()">☰</span>
 </div>
 
-<div class="profile-top">
-<div class="profile-pic-box">
-<img src="https://picsum.photos/200">
-</div>
-
-<div class="profile-stats">
-<div><h3>0</h3><p>Posts</p></div>
-<div><h3>0</h3><p>Followers</p></div>
-<div><h3>0</h3><p>Following</p></div>
-</div>
-</div>
-
-<div class="profile-bio">
-<h4 id="realName">User Name</h4>
-<p id="userEmail">Email</p>
-</div>
-
-<div class="profile-buttons">
-<button>Edit Profile</button>
-<button>Share Profile</button>
-</div>
-
 <div id="menuBox" class="menuBox">
-<button onclick="toggleTheme()">Dark Theme</button>
+<button onclick="toggleTheme()">Dark Mode</button>
+<button onclick="openMemeBattle()">🎭 Meme Battle</button>
 <button onclick="logout()">Logout</button>
 </div>
 
-<div class="profile-tabs">
-<span>▦</span>
-<span>▶</span>
-<span>⟳</span>
-<span>👤</span>
 </div>
 
-<div class="profile-posts-grid"></div>
+<!-- MEME BATTLE -->
+<div id="memeBattlePage">
 
-<div class="bottomNav">
-<div onclick="showFeed()">🏠</div>
-<div>🎬</div>
-<div>❤️</div>
-<div>🔍</div>
-<div onclick="showProfile()">👤</div>
-</div>
+<h2>🎭 Meme Battle</h2>
+
+<input id="battleName" placeholder="Name">
+<input id="battlePfp" placeholder="Profile Pic URL">
+
+<button onclick="saveBattleProfile()">Save</button>
+
+<button onclick="createLobby()">Create Lobby</button>
+
+<input id="joinCode" placeholder="Join Code">
+<button onclick="joinLobby()">Join Lobby</button>
+
+<h3 id="lobbyCodeShow"></h3>
+<div id="playersList"></div>
+
+<button id="startGameBtn" style="display:none;" onclick="startGame()">Start</button>
 
 </div>
 
@@ -360,6 +180,14 @@ signInWithEmailAndPassword,
 signOut
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
+import {
+getDatabase,
+ref,
+set,
+get,
+onValue
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
+
 const firebaseConfig = {
 apiKey:"AIzaSyDv0KqtYwTRBpEeONHF3trPPUIx0iRFBIw",
 authDomain:"mini-instagram-f7714.firebaseapp.com",
@@ -371,68 +199,111 @@ appId:"1:1060098135153:web:5e28b7e67312af593277d0"
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getDatabase(app);
 
-const authPage = document.getElementById("authPage");
-const feedPage = document.getElementById("feedPage");
-const profilePage = document.getElementById("profilePage");
+let currentLobby=null;
 
-window.register = async function(){
-const username = document.getElementById("username").value;
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-await createUserWithEmailAndPassword(auth,email,password);
-
-localStorage.setItem(email, username);
-
-document.getElementById("msg").innerText="Registered Successfully";
+/* AUTH */
+window.register=async()=>{
+await createUserWithEmailAndPassword(auth,email.value,password.value);
+localStorage.setItem(email.value,username.value);
 };
 
-window.login = async function(){
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
-
-await signInWithEmailAndPassword(auth,email,password);
-
-const savedUsername = localStorage.getItem(email) || "user";
-
-document.getElementById("userEmail").innerText=email;
-document.getElementById("profileUsername").innerText=savedUsername;
-document.getElementById("realName").innerText=savedUsername;
-
-showFeed();
+window.login=async()=>{
+await signInWithEmailAndPassword(auth,email.value,password.value);
+showProfile();
 };
 
-window.logout = async function(){
+window.logout=async()=>{
 await signOut(auth);
 showAuth();
 };
 
-window.showFeed = function(){
+/* NAV */
+window.showFeed=()=>{
 authPage.style.display="none";
-feedPage.style.display="block";
 profilePage.style.display="none";
+memeBattlePage.style.display="none";
 };
 
-window.showProfile = function(){
-feedPage.style.display="none";
-profilePage.style.display="block";
-};
-
-window.showAuth = function(){
+window.showAuth=()=>{
 authPage.style.display="flex";
-feedPage.style.display="none";
 profilePage.style.display="none";
+memeBattlePage.style.display="none";
 };
 
-window.toggleMenu = function(){
-let menu=document.getElementById("menuBox");
-menu.style.display = menu.style.display==="block" ? "none" : "block";
+window.showProfile=()=>{
+profilePage.style.display="block";
+authPage.style.display="none";
+memeBattlePage.style.display="none";
 };
 
-window.toggleTheme = function(){
+/* MENU */
+window.toggleMenu=()=>{
+menuBox.style.display = menuBox.style.display==="block"?"none":"block";
+}
+
+window.toggleTheme=()=>{
 document.body.classList.toggle("dark");
-};
+}
+
+/* MEME BATTLE */
+window.openMemeBattle=()=>{
+profilePage.style.display="none";
+memeBattlePage.style.display="block";
+}
+
+window.saveBattleProfile=()=>{
+localStorage.setItem("battleName",battleName.value);
+localStorage.setItem("battlePfp",battlePfp.value);
+alert("Saved");
+}
+
+window.createLobby=async()=>{
+let code=Math.random().toString(36).substring(2,7).toUpperCase();
+currentLobby=code;
+
+await set(ref(db,"lobby/"+code),{
+host:auth.currentUser.uid,
+players:{}
+});
+
+lobbyCodeShow.innerText=code;
+listenLobby(code);
+}
+
+window.joinLobby=async()=>{
+let snap=await get(ref(db,"lobby/"+joinCode.value));
+if(!snap.exists()) return;
+
+await set(ref(db,"lobby/"+joinCode.value+"/players/"+auth.currentUser.uid),{
+name:localStorage.getItem("battleName"),
+pfp:localStorage.getItem("battlePfp")
+});
+
+listenLobby(joinCode.value);
+}
+
+function listenLobby(code){
+onValue(ref(db,"lobby/"+code),(snap)=>{
+let data=snap.val();
+if(!data) return;
+
+playersList.innerHTML=
+Object.values(data.players||{}).map(p=>
+`<div><img src="${p.pfp}">${p.name}</div>`
+).join("");
+
+if(data.host===auth.currentUser.uid){
+startGameBtn.style.display="block";
+}
+});
+}
+
+window.startGame=()=>{
+set(ref(db,"lobby/"+currentLobby+"/status"),"started");
+alert("Game Started");
+}
 </script>
 
 </body>
