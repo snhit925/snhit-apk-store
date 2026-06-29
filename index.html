@@ -56,9 +56,6 @@ color:white;
 .appLogo{
 font-size:28px;
 font-weight:bold;
-background:linear-gradient(45deg,#fff,#ffd700);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
 }
 
 input,button{
@@ -97,7 +94,7 @@ align-items:center;
 padding:15px;
 background:white;
 border-bottom:1px solid #ddd;
-font-size:24px;
+font-size:20px;
 font-weight:bold;
 }
 
@@ -113,7 +110,6 @@ width:60px;
 height:60px;
 border-radius:50%;
 background:linear-gradient(45deg,orange,red,purple);
-padding:3px;
 }
 
 .feed{
@@ -192,7 +188,6 @@ flex:1;
 padding:10px;
 background:#2a2a2a;
 color:white;
-border:none;
 }
 
 .profile-tabs{
@@ -204,13 +199,6 @@ border-bottom:1px solid #333;
 padding-bottom:10px;
 }
 
-.profile-posts-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:3px;
-margin-top:10px;
-}
-
 .menuBox{
 display:none;
 margin-top:15px;
@@ -220,11 +208,9 @@ border-radius:10px;
 }
 
 .menuBox button{
-background:red;
-color:white;
+margin-top:10px;
 }
 
-/* NAV */
 .bottomNav{
 position:fixed;
 bottom:0;
@@ -262,7 +248,6 @@ cursor:pointer;
 </div>
 
 <div id="feedPage">
-
 <div class="topbar">
 <span>＋</span>
 <h3>Snhit Mini Insta</h3>
@@ -294,11 +279,9 @@ cursor:pointer;
 <div>🔍</div>
 <div onclick="showProfile()">👤</div>
 </div>
-
 </div>
 
 <div id="profilePage">
-
 <div class="profile-header">
 <span onclick="showFeed()">←</span>
 <h2 id="profileUsername">username</h2>
@@ -328,18 +311,16 @@ cursor:pointer;
 </div>
 
 <div id="menuBox" class="menuBox">
-<button onclick="toggleTheme()">Dark Theme</button>
+<button onclick="toggleTheme()">Toggle Theme</button>
 <button onclick="logout()">Logout</button>
 </div>
 
 <div class="profile-tabs">
 <span>▦</span>
-<span>▶</span>
+<span>▶️</span>
 <span>⟳</span>
 <span>👤</span>
 </div>
-
-<div class="profile-posts-grid"></div>
 
 <div class="bottomNav">
 <div onclick="showFeed()">🏠</div>
@@ -348,7 +329,6 @@ cursor:pointer;
 <div>🔍</div>
 <div onclick="showProfile()">👤</div>
 </div>
-
 </div>
 
 <script type="module">
@@ -357,7 +337,8 @@ import {
 getAuth,
 createUserWithEmailAndPassword,
 signInWithEmailAndPassword,
-signOut
+signOut,
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -375,22 +356,52 @@ const auth = getAuth(app);
 const authPage = document.getElementById("authPage");
 const feedPage = document.getElementById("feedPage");
 const profilePage = document.getElementById("profilePage");
+const msg = document.getElementById("msg");
+
+function showAuth(){
+authPage.style.display="flex";
+feedPage.style.display="none";
+profilePage.style.display="none";
+}
+
+function showFeed(){
+authPage.style.display="none";
+feedPage.style.display="block";
+profilePage.style.display="none";
+}
+
+function showProfile(){
+feedPage.style.display="none";
+profilePage.style.display="block";
+}
+
+window.showFeed = showFeed;
+window.showProfile = showProfile;
 
 window.register = async function(){
-const username = document.getElementById("username").value;
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+try{
+const username = username.value.trim();
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value.trim();
+
+if(!username || !email || !password){
+msg.innerText="Fill all fields";
+return;
+}
 
 await createUserWithEmailAndPassword(auth,email,password);
+localStorage.setItem(email,username);
 
-localStorage.setItem(email, username);
-
-document.getElementById("msg").innerText="Registered Successfully";
+msg.innerText="Registered Successfully";
+}catch(error){
+msg.innerText=error.message;
+}
 };
 
 window.login = async function(){
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+try{
+const email = document.getElementById("email").value.trim();
+const password = document.getElementById("password").value.trim();
 
 await signInWithEmailAndPassword(auth,email,password);
 
@@ -401,6 +412,9 @@ document.getElementById("profileUsername").innerText=savedUsername;
 document.getElementById("realName").innerText=savedUsername;
 
 showFeed();
+}catch(error){
+msg.innerText=error.message;
+}
 };
 
 window.logout = async function(){
@@ -408,31 +422,22 @@ await signOut(auth);
 showAuth();
 };
 
-window.showFeed = function(){
-authPage.style.display="none";
-feedPage.style.display="block";
-profilePage.style.display="none";
-};
-
-window.showProfile = function(){
-feedPage.style.display="none";
-profilePage.style.display="block";
-};
-
-window.showAuth = function(){
-authPage.style.display="flex";
-feedPage.style.display="none";
-profilePage.style.display="none";
-};
-
 window.toggleMenu = function(){
-let menu=document.getElementById("menuBox");
+const menu=document.getElementById("menuBox");
 menu.style.display = menu.style.display==="block" ? "none" : "block";
 };
 
 window.toggleTheme = function(){
 document.body.classList.toggle("dark");
 };
+
+onAuthStateChanged(auth,(user)=>{
+if(user){
+showFeed();
+}else{
+showAuth();
+}
+});
 </script>
 
 </body>
